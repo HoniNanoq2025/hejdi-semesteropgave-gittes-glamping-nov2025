@@ -12,14 +12,21 @@
   z-index: 10;
 }
 
-.logo {
-  height: 1.5rem;
-  width: auto;
+.logo img {
+  height: 52px;
+  width: 52px;
 }
 
 .burgerIcon {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
+  background-color: #2a4f57;
+  width: 64px;
+  height: 52px;
+  border-top-left-radius: 25px;
+  border-bottom-right-radius: 25px;
 }
 
 .overlay {

@@ -13,13 +13,14 @@ export default function Header() {
 
   return (
     <header className={styles.header}>
-      {!isFrontPage && (
-        <div className={styles.logo}>
-          <NavLink to="/">
-            <img src={logo} alt="Gittes Glamping" />
-          </NavLink>
-        </div>
-      )}
+      <div
+        className={styles.logo}
+        style={{ visibility: isFrontPage ? "hidden" : "visible" }}
+      >
+        <NavLink to="/">
+          <img src={logo} alt="Gittes Glamping" />
+        </NavLink>
+      </div>
 
       <div className={styles.burgerIcon} onClick={() => setMenuOpen(true)}>
         <RxHamburgerMenu size={28} />
