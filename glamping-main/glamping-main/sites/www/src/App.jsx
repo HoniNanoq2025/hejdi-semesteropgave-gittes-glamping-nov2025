@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home/Home";
 import Activities from "./pages/Activities/Activities";
 import Contact from "./pages/Contact/Contact";
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="/backoffice" element={<Backoffice />} />
         </Routes>
       </main>
+      <Footer />
     </div>
   );
 }

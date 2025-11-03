@@ -1,0 +1,29 @@
+.footer {
+  background-color: #2a4f57;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.soMe {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 93px;
+  gap: 15px;
+}
+
+.siteOwner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 22px;
+}
+
+.siteOwner p {
+  font-family: "Zen Loop", sans-serif;
+  font-size: 40px;
+}
