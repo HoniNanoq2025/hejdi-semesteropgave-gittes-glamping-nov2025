@@ -5,7 +5,7 @@ Author  : WEB - Media College Denmark
 Project : API / Backend for Gittes Glamping.
 ```
 
-## Kom igang.
+## Kom i gang.
 
 Følg følgende trin.
 

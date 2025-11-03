@@ -27,5 +27,9 @@
     "uuid": "^10.0.0"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "directories": {
+    "lib": "lib"
+  },
+  "devDependencies": {}
 }

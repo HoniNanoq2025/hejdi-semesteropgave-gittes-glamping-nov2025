@@ -1,5 +1,11 @@
-import { exit } from 'process';
-import { seedActivities, seedContacts, seedReviews, seedStays, seedUsers } from './seed/seed.mjs';
+import { exit } from "process";
+import {
+  seedActivities,
+  seedContacts,
+  seedReviews,
+  seedStays,
+  seedUsers,
+} from "./seed/seed.mjs";
 
 /*
 
@@ -8,19 +14,19 @@ import { seedActivities, seedContacts, seedReviews, seedStays, seedUsers } from 
 
 */
 
-console.log('----------------------')
-console.log('Media College Viborg')
-console.log('Seeding files')
-console.log('----------------------\n')
+console.log("----------------------");
+console.log("Media College Viborg");
+console.log("Seeding files");
+console.log("----------------------\n");
 
-// await seedUsers();
-// await seedActivities();
+await seedUsers();
+await seedActivities();
 await seedReviews();
 await seedStays();
 await seedContacts();
 
-console.log('\n----------------------')
-console.log('Seeding files completed')
-console.log('----------------------')
+console.log("\n----------------------");
+console.log("Seeding files completed");
+console.log("----------------------");
 
 exit();
