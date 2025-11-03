@@ -1,0 +1,73 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background-color: none;
+  font-family: "Zen Loop", sans-serif;
+  font-weight: 400;
+  font-size: 32px;
+  color: white;
+  position: relative;
+  z-index: 10;
+}
+
+.logo {
+  height: 1.5rem;
+  width: auto;
+}
+
+.burgerIcon {
+  display: block;
+  cursor: pointer;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: #829b97;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease, transform 0.3 ease;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.closeIcon {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.5rem;
+  color: white;
+  cursor: pointer;
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.mobileLink {
+  color: white;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.mobileLink:hover,
+.mobileLink.active {
+  color: #2a4f57;
+  text-decoration: underline;
+}
