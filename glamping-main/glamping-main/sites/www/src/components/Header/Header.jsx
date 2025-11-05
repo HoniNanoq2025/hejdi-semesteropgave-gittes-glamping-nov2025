@@ -1,9 +1,47 @@
 import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import {
+  AppBar,
+  Box,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  Toolbar,
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
+import CloseIcon from "@mui/icons-material/Close";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { IoClose } from "react-icons/io5";
 import logo from "../../assets/logo.png";
-import styles from "./Header.module.css";
+
+// Keep styled() only for truly reusable components
+const BurgerButton = styled(IconButton)({
+  backgroundColor: "#2a4f57",
+  width: "64px",
+  height: "52px",
+  borderTopLeftRadius: "25px",
+  borderBottomRightRadius: "25px",
+  borderTopRightRadius: 0,
+  borderBottomLeftRadius: 0,
+  color: "white",
+  padding: 0,
+  "&:hover": {
+    backgroundColor: "#2a4f57",
+  },
+});
+
+const StyledNavLink = styled(NavLink)({
+  color: "white",
+  textDecoration: "none",
+  fontSize: "2rem",
+  fontWeight: 500,
+  fontFamily: '"Zen Loop", sans-serif',
+  transition: "color 0.2s ease",
+  "&:hover, &.active": {
+    color: "#2a4f57",
+    textDecoration: "underline",
+  },
+});
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -12,62 +50,111 @@ export default function Header() {
   const isFrontPage = location.pathname === "/";
 
   return (
-    <header className={styles.header}>
-      <div
-        className={styles.logo}
-        style={{ visibility: isFrontPage ? "hidden" : "visible" }}
+    /* MUI Application Bar - bruges typisk til headers og navbars */
+    <AppBar
+      sx={{
+        backgroundColor: "transparent",
+        boxShadow: "none",
+        position: "relative",
+        zIndex: 10,
+      }}
+    >
+      {/* Toolbar er en Layout-hjælper, som skal være inde i en AppBar */}
+      <Toolbar
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "1rem 1.5rem",
+          minHeight: "auto",
+        }}
       >
-        <NavLink to="/">
-          <img src={logo} alt="Gittes Glamping" />
-        </NavLink>
-      </div>
+        <Box
+          sx={{
+            visibility: isFrontPage ? "hidden" : "visible",
+            "& img": {
+              height: "52px",
+              width: "52px",
+            },
+          }}
+        >
+          <NavLink to="/">
+            <img src={logo} alt="Gittes Glamping" />
+          </NavLink>
+        </Box>
 
-      <div className={styles.burgerIcon} onClick={() => setMenuOpen(true)}>
-        <RxHamburgerMenu size={28} />
-      </div>
+        <BurgerButton onClick={() => setMenuOpen(true)}>
+          <RxHamburgerMenu size={28} />
+        </BurgerButton>
 
-      <div className={`${styles.overlay} ${menuOpen ? styles.show : ""}`}>
-        <div className={styles.closeIcon} onClick={() => setMenuOpen(false)}>
-          <IoClose size={28} />
-        </div>
-        <nav className={styles.mobileNav}>
-          <NavLink
-            to="/stays"
-            className={styles.mobileLink}
-            onClick={handleLinkClick}
+        {/* Drawer (skuffe) er et slide-out panel der agerer full screen menu, som åbner, når man klikker på BurgerButton */}
+        <Drawer
+          anchor="top"
+          open={menuOpen}
+          onClose={() => setMenuOpen(false)}
+          sx={{
+            "& .MuiDrawer-paper": {
+              backgroundColor: "#829b97",
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            },
+          }}
+        >
+          {/* Klik på krydset for at lukke full screen menu */}
+          <IconButton
+            onClick={() => setMenuOpen(false)}
+            sx={{
+              position: "absolute",
+              top: "1.2rem",
+              right: "1.5rem",
+              color: "white",
+            }}
           >
-            Ophold
-          </NavLink>
-          <NavLink
-            to="/contact"
-            className={styles.mobileLink}
-            onClick={handleLinkClick}
+            <CloseIcon sx={{ fontSize: 28 }} />
+          </IconButton>
+
+          {/* Liste (lidt a la <ul>), der fungerer som nav) */}
+          <List
+            component="nav"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "2rem",
+              alignItems: "center",
+            }}
           >
-            Kontakt
-          </NavLink>
-          <NavLink
-            to="/activities"
-            className={styles.mobileLink}
-            onClick={handleLinkClick}
-          >
-            Aktiviteter
-          </NavLink>
-          <NavLink
-            to="/mylist"
-            className={styles.mobileLink}
-            onClick={handleLinkClick}
-          >
-            Min liste
-          </NavLink>
-          <NavLink
-            to="/backoffice"
-            className={styles.mobileLink}
-            onClick={handleLinkClick}
-          >
-            Backoffice
-          </NavLink>
-        </nav>
-      </div>
-    </header>
+            <ListItem sx={{ padding: 0, justifyContent: "center" }}>
+              <StyledNavLink to="/stays" onClick={handleLinkClick}>
+                Ophold
+              </StyledNavLink>
+            </ListItem>
+            <ListItem sx={{ padding: 0, justifyContent: "center" }}>
+              <StyledNavLink to="/contact" onClick={handleLinkClick}>
+                Kontakt
+              </StyledNavLink>
+            </ListItem>
+            <ListItem sx={{ padding: 0, justifyContent: "center" }}>
+              <StyledNavLink to="/activities" onClick={handleLinkClick}>
+                Aktiviteter
+              </StyledNavLink>
+            </ListItem>
+            <ListItem sx={{ padding: 0, justifyContent: "center" }}>
+              <StyledNavLink to="/mylist" onClick={handleLinkClick}>
+                Min liste
+              </StyledNavLink>
+            </ListItem>
+            <ListItem sx={{ padding: 0, justifyContent: "center" }}>
+              <StyledNavLink to="/backoffice" onClick={handleLinkClick}>
+                Backoffice
+              </StyledNavLink>
+            </ListItem>
+          </List>
+        </Drawer>
+      </Toolbar>
+    </AppBar>
   );
 }

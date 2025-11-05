@@ -8,12 +8,14 @@ import Stays from "./pages/Stays/Stays";
 import StayDetails from "./pages/StayDetails/StayDetails";
 import MyList from "./pages/MyList/MyList";
 import Backoffice from "./pages/BackOffice/Backoffice";
+import Login from "./components/Login/Login";
 import styles from "./App.module.css";
 
 export default function App() {
   return (
     <div className={styles.app}>
       <Header />
+
       <main className={styles.main}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -23,6 +25,7 @@ export default function App() {
           <Route path="/stay/:id" element={<StayDetails />} />
           <Route path="/mylist" element={<MyList />} />
           <Route path="/backoffice" element={<Backoffice />} />
+          <Route path="/auth/signin" element={<Login />} />
         </Routes>
       </main>
       <Footer />
