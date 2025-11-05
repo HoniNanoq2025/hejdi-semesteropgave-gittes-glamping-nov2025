@@ -89,6 +89,7 @@ export default function ActivityCard({ activity }) {
           zIndex: 3,
         }}
       >
+        {/* Box med Favorite Icon og Tid Info */}
         <Box
           sx={{
             display: "flex",
