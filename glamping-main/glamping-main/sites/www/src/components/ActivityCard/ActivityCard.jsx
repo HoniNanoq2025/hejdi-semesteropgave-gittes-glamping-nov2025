@@ -134,14 +134,17 @@ export default function ActivityCard({ activity }) {
               borderBottomRightRadius: "50px",
               color: "white",
               minHeight: "56px",
+              display: "flex",
+              alignItems: "center",
               "&.Mui-expanded": {
                 minHeight: "56px",
                 borderBottomLeftRadius: expanded ? 0 : 0,
                 borderBottomRightRadius: expanded ? "50px" : "50px",
               },
               "&.MuiAccordionSummary-content": {
-                margin: "12px 0",
+                margin: "0",
                 justifyContent: "center",
+                flexGrow: 0,
               },
             }}
           >
