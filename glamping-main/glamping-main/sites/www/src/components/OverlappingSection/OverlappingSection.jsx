@@ -5,7 +5,6 @@ export default function OverlappingSection({
   header = "Standard Header",
   body = "Standard brødtekst",
   isHome = false, // Billede + Button vises kun hvis true
-  overlap = { xs: -8, md: -10 },
 }) {
   return (
     <Box
