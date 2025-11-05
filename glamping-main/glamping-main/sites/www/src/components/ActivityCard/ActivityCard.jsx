@@ -28,25 +28,9 @@ export default function ActivityCard({ activity }) {
         overflow: "visible", //Vigtig til overlapping effekt
       }}
     >
-      {/* Billede */}
-      <CardMedia
-        component="img"
-        height="280"
-        image={activity.image}
-        alt={activity.title}
-        sx={{
-          borderTopLeftRadius: "50px",
-          borderBottomRightRadius: "50px",
-        }}
-      />
-
       {/* Header Box - overlapper billede */}
       <Box
         sx={{
-          position: "absolute",
-          top: "220px", // JUSTÈR HER
-          left: "50%",
-          transform: "translateX(-50%)",
           width: "85%",
           backgroundColor: "#C5B496",
           borderTopLeftRadius: "50px",
@@ -70,11 +54,18 @@ export default function ActivityCard({ activity }) {
         </Typography>
       </Box>
 
+      {/* Billede */}
+      <CardMedia
+        component="img"
+        height="280"
+        image={activity.image}
+        alt={activity.title}
+      />
+
       {/* Info Box med Accordion - overlapper også billede */}
       <Box
         sx={{
           position: "relative",
-          mt: "60px",
           backgroundColor: "#33626C",
           borderTopLeftRadius: "50px",
           borderBottomRightRadius: "50px",
@@ -105,6 +96,8 @@ export default function ActivityCard({ activity }) {
             mb: 2,
           }}
         >
+          {activity.date}
+          <br />
           {activity.time}
         </Typography>
 
@@ -141,6 +134,7 @@ export default function ActivityCard({ activity }) {
               sx={{
                 fontFamily: "Zen Loop",
                 fontSize: "24px",
+                textAlign: "center",
               }}
             >
               Læs Mere
