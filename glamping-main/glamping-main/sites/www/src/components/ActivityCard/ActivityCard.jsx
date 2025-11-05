@@ -116,12 +116,19 @@ export default function ActivityCard({ activity }) {
           <IconButton
             onClick={() => setFavorite(!favorite)} // Toggle mellem favorit/ikke-favorit
             sx={{
-              color: "white",
+              color: favorite ? "white" : "#ffffff2e", // Ternary operator: Skift farve baseret på favorit-status
+              width: "45px",
+              height: "40px",
+              backgroundColor: "#ffffff2e",
+              borderTopRightRadius: 0,
+              borderTopLeftRadius: "10px",
+              borderBottomLeftRadius: 0,
+              borderBottomRightRadius: "10px",
               padding: 0, // Fjerner default padding så ikonet flugter med teksten
+              transition: "color 0.3s ease, background-color 0.3s ease", // Gør det glidende
             }}
           >
-            {/* Ternary operator: Hvis favorit er true, vis fyldt hjerte, ellers vis outline hjerte */}
-            {favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            <FavoriteIcon />
           </IconButton>
         </Box>
 
