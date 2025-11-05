@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { fetchReviews } from "../../api/fetch";
 import { toast } from "react-toastify";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import bgHome from "../../assets/image_00.jpg";
-import logo from "../../assets/logo.png";
 import Hero from "../../components/Hero/Hero";
 import OverlappingSection from "../../components/OverlappingSection/OverlappingSection";
 import ReviewList from "../../components/ReviewList/ReviewList";
+import bgHome from "../../assets/image_00.jpg";
+import logo from "../../assets/logo.png";
 
 export default function Home() {
   const [reviews, setReviews] = useState([]);
