@@ -14,7 +14,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { RxHamburgerMenu } from "react-icons/rx";
 import logo from "../../assets/logo.png";
 
-// Keep styled() only for truly reusable components
+// styled() bruges til genanvendte komponenter
 const BurgerButton = styled(IconButton)({
   backgroundColor: "#2a4f57",
   width: "64px",
@@ -55,7 +55,7 @@ export default function Header() {
       sx={{
         backgroundColor: "transparent",
         boxShadow: "none",
-        position: "relative",
+        position: "fixed",
         zIndex: 10,
       }}
     >
