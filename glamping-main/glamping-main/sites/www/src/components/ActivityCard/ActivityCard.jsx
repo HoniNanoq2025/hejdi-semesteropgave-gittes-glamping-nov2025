@@ -21,7 +21,10 @@ export default function ActivityCard({ activity }) {
     <Card
       sx={{
         position: "relative",
-        maxWidth: 345,
+        maxWidth: 390,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
         backgroundColor: "#CED3CD",
         border: "none",
         boxShadow: "none",
@@ -31,21 +34,25 @@ export default function ActivityCard({ activity }) {
       {/* Header Box - overlapper billede */}
       <Box
         sx={{
+          position: "relative",
           width: "85%",
+          margin: "0 auto",
           backgroundColor: "#C5B496",
           borderTopLeftRadius: "50px",
           borderBottomRightRadius: "50px",
           py: 2,
           px: 3,
           textAlign: "center",
-          zIndex: 2,
+          zIndex: 3,
+          marginBottom: "-45px",
+          maxWidth: "320px",
         }}
       >
         <Typography
           variant="h2"
           sx={{
             fontFamily: "Zen Loop",
-            fontSize: "40px",
+            fontSize: "64px",
             fontWeight: 400,
             color: "white",
           }}
@@ -57,9 +64,14 @@ export default function ActivityCard({ activity }) {
       {/* Billede */}
       <CardMedia
         component="img"
-        height="280"
+        width="390px"
+        height="auto"
         image={activity.image}
         alt={activity.title}
+        sx={{
+          position: "relative",
+          zIndex: 2,
+        }}
       />
 
       {/* Info Box med Accordion - overlapper også billede */}
@@ -72,6 +84,9 @@ export default function ActivityCard({ activity }) {
           pt: 5,
           pb: 2,
           px: 2,
+          marginTop: "-30px",
+          maxWidth: "320px",
+          zIndex: 3,
         }}
       >
         {/* Favorite Icon */}
