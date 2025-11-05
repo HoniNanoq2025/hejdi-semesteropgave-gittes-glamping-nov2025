@@ -7,6 +7,7 @@ export default function Hero({
   ...props
 }) {
   const isHome = variant === "home";
+  const isSimple = variant === "simple";
 
   return (
     <Box
@@ -22,8 +23,10 @@ export default function Hero({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        pb: { xs: 10, md: 12 },
       }}
     >
+      {/* Overlay til Home */}
       {isHome && (
         <Box
           sx={{
@@ -35,9 +38,21 @@ export default function Hero({
         />
       )}
 
+      {/* Overlay til simple variant */}
+      {isSimple && (
+        <Box
+          sx={{
+            position: "absolute",
+            inset: 0,
+            backgroundColor: "#3636368F",
+            zIndex: 1,
+          }}
+        />
+      )}
+
       {/* Stack erstatter behov for at skrive display:flex, flexDirection og gap manuelt */}
       <Stack
-        spacing={{ xs: 2, md: 3 }}
+        spacing={0}
         alignItems="center"
         textAlign="center"
         sx={{
@@ -55,6 +70,7 @@ export default function Hero({
             sx={{
               width: { xs: 72, sm: 112, md: 152 },
               filter: "brightness(0) invert(1)",
+              mb: { xs: 2, md: 3 },
             }}
           />
         )}
@@ -66,8 +82,9 @@ export default function Hero({
             fontSize: isHome
               ? { xs: "64px", sm: "80px", md: "96px" } // Home ("Gittes")
               : { xs: "96px", sm: "120px", md: "144px" }, // Undersider + Home: Glamping
-            fontWeight: isHome ? 400 : 700,
+            fontWeight: isHome ? 700 : 400,
             lineHeight: 1,
+            mb: isHome ? { xs: "-20px", sm: "-25px", md: "-30px" } : 0,
           }}
         >
           {isHome ? props.titlePart1 : title}
@@ -81,7 +98,7 @@ export default function Hero({
               fontSize: { xs: "96px", sm: "120px", md: "144px" },
               fontWeight: 700,
               lineHeight: 1,
-              mt: "-10px",
+              mb: { xs: 6, md: 8 },
             }}
           >
             {props.titlePart2}

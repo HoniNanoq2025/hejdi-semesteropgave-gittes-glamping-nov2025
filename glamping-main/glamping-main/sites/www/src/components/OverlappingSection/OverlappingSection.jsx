@@ -12,7 +12,7 @@ export default function OverlappingSection({
         position: "relative",
         backgroundColor: "#33626C",
         color: "white",
-        mt: -10, // Overlap med Hero
+        mt: { xs: -8, md: -10 }, // Overlap med Hero
         borderTopLeftRadius: "50px",
         borderBottomRightRadius: "50px",
         px: { xs: 2, sm: 4 },
