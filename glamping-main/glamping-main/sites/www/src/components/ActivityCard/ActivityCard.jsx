@@ -64,7 +64,7 @@ export default function ActivityCard({ activity }) {
       <CardMedia
         component="img"
         width="390px"
-        height="auto"
+        height="311px"
         image={activity.image}
         alt={activity.title}
         sx={{
