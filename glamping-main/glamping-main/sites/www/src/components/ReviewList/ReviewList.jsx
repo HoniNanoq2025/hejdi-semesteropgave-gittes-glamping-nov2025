@@ -17,8 +17,8 @@ export default function ReviewList({ reviews }) {
           borderTopLeftRadius: "50px",
           borderBottomRightRadius: "50px",
           maxWidth: { xs: "300px", md: "370px" },
-          px: 3,
-          py: 2,
+          px: 3, //px: 3 = padding-left + padding-right: 24px
+          py: 2, // py: 2 = padding-top + padding-bottom: 16px
         }}
       >
         <Typography
@@ -52,7 +52,7 @@ export default function ReviewList({ reviews }) {
               borderTopLeftRadius: "50px",
               borderBottomRightRadius: "50px",
               width: "300px",
-              px: "17px",
+              px: "17px", //px = padding-left + padding-right
               py: "43px",
               display: "flex",
               flexDirection: "column",

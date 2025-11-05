@@ -59,7 +59,7 @@ export default function Hero({
           position: "relative",
           zIndex: 2,
           color: "white",
-          px: { xs: 2, sm: 4 },
+          px: { xs: 2, sm: 4 }, //px: 2 = padding-left + padding-right: 16px / 32px (tablet)
         }}
       >
         {isHome && props.logo && (
@@ -70,7 +70,7 @@ export default function Hero({
             sx={{
               width: { xs: 72, sm: 112, md: 152 },
               filter: "brightness(0) invert(1)",
-              mb: { xs: 2, md: 3 },
+              mb: { xs: 2, md: 3 }, // margin-bottom: 16px på mobile / 24 px på desktop
             }}
           />
         )}
@@ -84,10 +84,11 @@ export default function Hero({
               : { xs: "96px", sm: "120px", md: "144px" }, // Undersider + Home: Glamping
             fontWeight: isHome ? 700 : 400,
             lineHeight: 1,
-            mb: isHome ? { xs: "-20px", sm: "-25px", md: "-30px" } : 0,
+            mb: isHome ? { xs: "-20px", sm: "-25px", md: "-30px" } : 0, // Ternary operator: Hvis isHome, så sæt margin-bottom på mobil, tablet og desktop, ellers er den 0,
           }}
         >
           {isHome ? props.titlePart1 : title}
+          {/* Hvis isHome så brug props.titlePart1, ellers brug title */}
         </Typography>
 
         {isHome && (
@@ -98,7 +99,7 @@ export default function Hero({
               fontSize: { xs: "96px", sm: "120px", md: "144px" },
               fontWeight: 700,
               lineHeight: 1,
-              mb: { xs: 6, md: 8 },
+              mb: { xs: 6, md: 8 }, // margin-bottom mobil: 48px, desktop: 64px
             }}
           >
             {props.titlePart2}
@@ -116,8 +117,8 @@ export default function Hero({
               borderBottomRightRadius: "25px",
               borderTopRightRadius: 0,
               borderBottomLeftRadius: 0,
-              px: { xs: 2, sm: 4 },
-              py: 1.5,
+              px: { xs: 2, sm: 4 }, //px: 2 = padding-left + padding-right: 16px / 32px
+              py: 1.5, // py: 1.5 = padding-top + padding-bottom: 12px
               fontFamily: "Zen Loop",
               fontSize: "48px",
               "&:hover": { backgroundColor: "#829B97" },

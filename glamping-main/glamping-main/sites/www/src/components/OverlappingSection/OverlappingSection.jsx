@@ -15,13 +15,13 @@ export default function OverlappingSection({
         position: "relative",
         backgroundColor: "#33626C",
         color: "white",
-        mt: isHome
+        mt: isHome // mt = margin-top
           ? { xs: -8, md: -10 } // overlap på Home
           : { xs: -14, md: -16 }, // Overlap med Hero
         borderTopLeftRadius: "50px",
         borderBottomRightRadius: "50px",
-        px: { xs: 2, sm: 4 },
-        py: 10,
+        px: { xs: 2, sm: 4 }, //px: 2 = padding-left + padding-right: 16px / 32px
+        py: 10, // padding-top + padding-bottom 80px,
         zIndex: 2,
       }}
     >
@@ -29,7 +29,8 @@ export default function OverlappingSection({
         {/* Header */}
         <Typography
           variant="h2"
-          sx={{ fontFamily: "Zen Loop", fontWeight: 700, mb: 3, px: 2 }}
+          sx={{ fontFamily: "Zen Loop", fontWeight: 700, mb: 3, px: 2 }} // mb = margin-bottom: 24px,
+          //px: 2 = padding-left + padding-right: 16px
         >
           {header}
         </Typography>
@@ -37,7 +38,7 @@ export default function OverlappingSection({
         {/* Brødtekst */}
         <Typography
           variant="body1"
-          sx={{ fontFamily: "Nanum Gothic", maxWidth: 600, mb: isHome ? 6 : 0 }}
+          sx={{ fontFamily: "Nanum Gothic", maxWidth: 600, mb: isHome ? 6 : 0 }} // mb = margin-bottom er 48px eller 0
         >
           {body}
         </Typography>
@@ -54,8 +55,8 @@ export default function OverlappingSection({
                 height: 176,
                 borderRadius: "100px",
                 objectFit: "cover",
-                mt: 2,
-                mb: 4,
+                mt: 2, // margin-top: 16px
+                mb: 4, // margin-bottom: 32px
               }}
             />
 
@@ -69,8 +70,8 @@ export default function OverlappingSection({
                 borderBottomRightRadius: "25px",
                 borderTopRightRadius: 0,
                 borderBottomLeftRadius: 0,
-                px: 4,
-                py: 1.5,
+                px: 4, //px: 4 = padding-left + padding-right: 32px
+                py: 1.5, // py: 1.5 = padding-top + padding-bottom: 12px
                 fontFamily: "Zen Loop",
                 fontSize: "40px",
                 fontWeight: 700,

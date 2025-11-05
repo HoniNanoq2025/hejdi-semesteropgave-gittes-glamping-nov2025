@@ -49,7 +49,7 @@ export default function Activities() {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            py: 8,
+            py: 8, // py: 8 = padding-top + padding-bottom: 64px
           }}
         >
           <CircularProgress size={60} />

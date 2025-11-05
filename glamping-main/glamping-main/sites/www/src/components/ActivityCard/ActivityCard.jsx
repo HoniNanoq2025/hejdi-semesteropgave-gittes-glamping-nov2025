@@ -40,8 +40,8 @@ export default function ActivityCard({ activity }) {
           backgroundColor: "#C5B496",
           borderTopLeftRadius: "50px",
           borderBottomRightRadius: "50px",
-          py: 2,
-          px: 3,
+          py: 2, // py: 2 = padding-top + padding-bottom: 16px
+          px: 3, //px: 3 = padding-left + padding-right: 24px
           textAlign: "center",
           zIndex: 3,
           marginBottom: "-45px",
@@ -95,7 +95,7 @@ export default function ActivityCard({ activity }) {
             display: "flex",
             alignItems: "flex-start",
             justifyContent: "space-between",
-            mb: 2,
+            mb: 2, // Margin-bottom: 16px
           }}
         >
           {/* Tid info */}
@@ -104,7 +104,7 @@ export default function ActivityCard({ activity }) {
               color: "white",
               fontFamily: "Zen Loop",
               fontSize: "32px",
-              mb: 2,
+              mb: 2, // Margin-bottom: 16px
             }}
           >
             {activity.date}
