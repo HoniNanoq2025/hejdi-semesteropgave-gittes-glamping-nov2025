@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Typography, Card, CardContent, Grid } from "@mui/material";
 
 export default function ReviewList({ reviews }) {
