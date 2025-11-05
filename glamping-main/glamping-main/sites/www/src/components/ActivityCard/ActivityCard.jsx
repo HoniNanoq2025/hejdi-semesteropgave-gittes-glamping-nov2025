@@ -114,29 +114,30 @@ export default function ActivityCard({ activity }) {
 
           {/* Favorite Icon */}
           <IconButton
-            onClick={() => setFavorite(!favorite)}
+            onClick={() => setFavorite(!favorite)} // Toggle mellem favorit/ikke-favorit
             sx={{
               color: "white",
-              padding: 0,
+              padding: 0, // Fjerner default padding så ikonet flugter med teksten
             }}
           >
+            {/* Ternary operator: Hvis favorit er true, vis fyldt hjerte, ellers vis outline hjerte */}
             {favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
           </IconButton>
         </Box>
 
         {/* Accordion */}
         <Accordion
-          expanded={expanded}
-          onChange={() => setExpanded(!expanded)}
+          expanded={expanded} // Styrer om accordion er åben eller lukket
+          onChange={() => setExpanded(!expanded)} // Toggle accordion åben/lukket
           sx={{
-            backgroundColor: "transparent",
-            boxShadow: "none",
-            "&:before": { display: "none" },
+            backgroundColor: "transparent", // Gennemsigtig baggrund
+            boxShadow: "none", // Fjerner default MUI skygge
+            "&:before": { display: "none" }, // Fjerner MUI's default border-linje over accordion
           }}
         >
           <AccordionSummary
             expandIcon={
-              <ExpandMoreIcon sx={{ color: "white", fontSize: "40px" }} />
+              <ExpandMoreIcon sx={{ color: "white", fontSize: "40px" }} /> // Pil-ikon der roterer ved åbning
             }
             sx={{
               border: "1px solid white",
@@ -145,23 +146,26 @@ export default function ActivityCard({ activity }) {
               color: "white",
               minHeight: "56px",
               display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              alignItems: "center", // Centrerer indhold vertikalt
+              justifyContent: "center", // Centrerer indhold horisontalt
+              // Styling når accordion er åben (expanded)
               "&.Mui-expanded": {
                 minHeight: "56px",
-                borderBottomLeftRadius: expanded ? 0 : 0,
-                borderBottomRightRadius: expanded ? "50px" : "50px",
+                borderBottomLeftRadius: expanded ? 0 : 0, // Fjerner nederste venstre radius når åben
+                borderBottomRightRadius: expanded ? "50px" : "50px", // Beholder nederste højre radius
               },
+              // Target tekst-indholdet i accordion header
               "& .MuiAccordionSummary-content": {
-                margin: "0",
-                justifyContent: "center",
-                flexGrow: 0,
+                margin: "0", // Fjerner default margin
+                justifyContent: "center", // Centrerer "Læs Mere" teksten
+                flexGrow: 0, // Forhindrer teksten i at fylde hele bredden
               },
+              // Target expand-ikonet (pilen)
               "&.MuiAccordionSummary-expandIconWrapper": {
-                position: "absolute",
-                right: "65px",
-                top: "50%",
-                transform: "translateY(-45%)",
+                position: "absolute", // Absolut positionering for at placere pilen manuelt
+                right: "65px", // Afstand fra højre kant
+                top: "50%", // Centrerer vertikalt
+                transform: "translateY(-45%)", // Justerer præcis vertikal centrering
               },
             }}
           >
