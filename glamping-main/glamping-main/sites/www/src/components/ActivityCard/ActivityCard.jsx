@@ -81,40 +81,47 @@ export default function ActivityCard({ activity }) {
           backgroundColor: "#33626C",
           borderTopLeftRadius: "50px",
           borderBottomRightRadius: "50px",
-          pt: 5,
-          pb: 2,
-          px: 2,
+          pt: 3,
+          pb: 3,
+          px: 3,
           marginTop: "-30px",
           maxWidth: "320px",
           zIndex: 3,
         }}
       >
-        {/* Favorite Icon */}
-        <IconButton
-          onClick={() => setFavorite(!favorite)}
+        <Box
           sx={{
-            position: "absolute",
-            top: 16,
-            right: 16,
-            color: "white",
-          }}
-        >
-          {favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-        </IconButton>
-
-        {/* Tid info */}
-        <Typography
-          sx={{
-            color: "white",
-            fontFamily: "Zen Loop",
-            fontSize: "32px",
+            display: "flex",
+            alignItems: "flex-start",
+            justifyContent: "space-between",
             mb: 2,
           }}
         >
-          {activity.date}
-          <br />
-          {activity.time}
-        </Typography>
+          {/* Tid info */}
+          <Typography
+            sx={{
+              color: "white",
+              fontFamily: "Zen Loop",
+              fontSize: "32px",
+              mb: 2,
+            }}
+          >
+            {activity.date}
+            <br />
+            {activity.time}
+          </Typography>
+
+          {/* Favorite Icon */}
+          <IconButton
+            onClick={() => setFavorite(!favorite)}
+            sx={{
+              color: "white",
+              padding: 0,
+            }}
+          >
+            {favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          </IconButton>
+        </Box>
 
         {/* Accordion */}
         <Accordion
@@ -131,7 +138,7 @@ export default function ActivityCard({ activity }) {
               <ExpandMoreIcon sx={{ color: "white", fontSize: "40px" }} />
             }
             sx={{
-              border: "2px solid white",
+              border: "1px solid white",
               borderTopLeftRadius: "50px",
               borderBottomRightRadius: "50px",
               color: "white",
