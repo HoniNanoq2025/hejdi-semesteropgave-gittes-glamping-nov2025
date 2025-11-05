@@ -127,7 +127,9 @@ export default function ActivityCard({ activity }) {
           }}
         >
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
+            expandIcon={
+              <ExpandMoreIcon sx={{ color: "white", fontSize: "40px" }} />
+            }
             sx={{
               border: "2px solid white",
               borderTopLeftRadius: "50px",
@@ -136,22 +138,29 @@ export default function ActivityCard({ activity }) {
               minHeight: "56px",
               display: "flex",
               alignItems: "center",
-              "&.Mui-expanded": {
+              justifyContent: "center",
+              "& .Mui-expanded": {
                 minHeight: "56px",
                 borderBottomLeftRadius: expanded ? 0 : 0,
                 borderBottomRightRadius: expanded ? "50px" : "50px",
               },
-              "&.MuiAccordionSummary-content": {
+              "& .MuiAccordionSummary-content": {
                 margin: "0",
                 justifyContent: "center",
                 flexGrow: 0,
+              },
+              "& .MuiAccordionSummary-expandIconWrapper": {
+                position: "absolute",
+                right: "65px",
+                top: "50%",
+                transform: "translateY(-45%)",
               },
             }}
           >
             <Typography
               sx={{
                 fontFamily: "Zen Loop",
-                fontSize: "24px",
+                fontSize: "40px",
                 textAlign: "center",
               }}
             >
