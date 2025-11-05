@@ -1,4 +1,5 @@
 import { Box, Typography, Button, Stack } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import gitteImg from "../../assets/gitte.jpg";
 
 export default function OverlappingSection({
@@ -6,6 +7,8 @@ export default function OverlappingSection({
   body = "Standard brødtekst",
   isHome = false, // Billede + Button vises kun hvis true
 }) {
+  const navigate = useNavigate();
+
   return (
     <Box
       sx={{
@@ -61,6 +64,7 @@ export default function OverlappingSection({
               sx={{
                 backgroundColor: "#829B97",
                 color: "white",
+                border: "1px solid transparent",
                 borderTopLeftRadius: "25px",
                 borderBottomRightRadius: "25px",
                 borderTopRightRadius: 0,
@@ -73,9 +77,10 @@ export default function OverlappingSection({
                 "&:hover": {
                   backgroundColor: "transparent", // fjern fyld
                   color: "white", // tekst forbliver hvid
-                  border: "2px solid white",
+                  border: "1px solid white",
                 },
               }}
+              onClick={() => navigate("/activities")}
             >
               SE VORES OPHOLD
             </Button>

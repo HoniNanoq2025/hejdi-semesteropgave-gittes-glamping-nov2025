@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { fetchReviews } from "../../api/fetch";
 import { toast } from "react-toastify";
 import { Box, CircularProgress, Typography } from "@mui/material";
@@ -11,6 +12,7 @@ import ReviewList from "../../components/ReviewList/ReviewList";
 export default function Home() {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getReviews = async () => {
@@ -28,6 +30,10 @@ export default function Home() {
     getReviews();
   }, []);
 
+  const handleBookNow = () => {
+    navigate("/contact");
+  };
+
   return (
     <>
       <Hero
@@ -37,6 +43,7 @@ export default function Home() {
         titlePart1="Gittes"
         titlePart2="Glamping"
         buttonText="Book Nu"
+        onButtonClick={handleBookNow}
         minHeight={{ xs: "80vh", md: "100vh" }}
       />
       <OverlappingSection
