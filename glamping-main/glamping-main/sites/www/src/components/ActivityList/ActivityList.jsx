@@ -8,14 +8,7 @@ export default function ActivityList({ activities }) {
   return (
     <Box className="activities" display="flex" flexDirection="column">
       {activities.map((activity) => (
-        <ActivityCard
-          key={activity._id}
-          activity={activity}
-          title={title}
-          image={image}
-          time={time}
-          description={description}
-        />
+        <ActivityCard key={activity._id} activity={activity} />
       ))}
     </Box>
   );

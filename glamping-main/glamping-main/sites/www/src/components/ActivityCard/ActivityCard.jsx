@@ -13,13 +13,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
-export default function ActivityCard({
-  activity,
-  title,
-  image,
-  time,
-  description,
-}) {
+export default function ActivityCard({ activity }) {
   const [favorite, setFavorite] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
@@ -29,7 +23,8 @@ export default function ActivityCard({
         position: "relative",
         maxWidth: 345,
         backgroundColor: "#CED3CD",
-        borderRadius: "20px",
+        border: "none",
+        boxShadow: "none",
         overflow: "visible", //Vigtig til overlapping effekt
       }}
     >
@@ -54,7 +49,8 @@ export default function ActivityCard({
           transform: "translateX(-50%)",
           width: "85%",
           backgroundColor: "#C5B496",
-          borderRadius: "35px",
+          borderTopLeftRadius: "50px",
+          borderBottomRightRadius: "50px",
           py: 2,
           px: 3,
           textAlign: "center",
@@ -119,20 +115,21 @@ export default function ActivityCard({
           sx={{
             backgroundColor: "transparent",
             boxShadow: "none",
-            "&:before": { display: none },
+            "&:before": { display: "none" },
           }}
         >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
             sx={{
               border: "2px solid white",
-              borderRadius: "25px",
+              borderTopLeftRadius: "50px",
+              borderBottomRightRadius: "50px",
               color: "white",
               minHeight: "56px",
               "&.Mui-expanded": {
                 minHeight: "56px",
                 borderBottomLeftRadius: expanded ? 0 : 0,
-                borderBottomRightRadius: expanded ? 0 : "50px",
+                borderBottomRightRadius: expanded ? "50px" : "50px",
               },
               "&.MuiAccordionSummary-content": {
                 margin: "12px 0",
@@ -151,7 +148,7 @@ export default function ActivityCard({
           </AccordionSummary>
           <AccordionDetails
             sx={{
-              border: "2px solid white",
+              border: "none",
               borderTop: "none",
               borderBottomLeftRadius: 0,
               borderBottomRightRadius: "50px",
