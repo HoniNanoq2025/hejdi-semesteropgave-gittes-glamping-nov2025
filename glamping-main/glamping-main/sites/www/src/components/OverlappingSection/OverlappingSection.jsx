@@ -5,6 +5,7 @@ export default function OverlappingSection({
   header = "Standard Header",
   body = "Standard brødtekst",
   isHome = false, // Billede + Button vises kun hvis true
+  overlap = { xs: -8, md: -10 },
 }) {
   return (
     <Box
@@ -12,11 +13,13 @@ export default function OverlappingSection({
         position: "relative",
         backgroundColor: "#33626C",
         color: "white",
-        mt: { xs: -8, md: -10 }, // Overlap med Hero
+        mt: isHome
+          ? { xs: -8, md: -10 } // overlap på Home
+          : { xs: -14, md: -16 }, // Overlap med Hero
         borderTopLeftRadius: "50px",
         borderBottomRightRadius: "50px",
         px: { xs: 2, sm: 4 },
-        py: 13,
+        py: 10,
         zIndex: 2,
       }}
     >
@@ -24,7 +27,7 @@ export default function OverlappingSection({
         {/* Header */}
         <Typography
           variant="h2"
-          sx={{ fontFamily: "Zen Loop", fontWeight: 700, mb: 3 }}
+          sx={{ fontFamily: "Zen Loop", fontWeight: 700, mb: 3, px: 2 }}
         >
           {header}
         </Typography>

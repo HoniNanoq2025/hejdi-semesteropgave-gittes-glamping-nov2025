@@ -15,15 +15,15 @@ export default function Hero({
         position: "relative",
         width: "100%",
         minHeight: isHome
-          ? { xs: "844px", md: "80vh" }
-          : { xs: "694px", md: "70vh" },
+          ? { xs: "740px", md: "80vh" }
+          : { xs: "640px", md: "70vh" },
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        pb: { xs: 10, md: 12 },
+        pb: isHome ? { xs: 6, md: 8 } : { xs: 12, md: 14 },
       }}
     >
       {/* Overlay til Home */}
