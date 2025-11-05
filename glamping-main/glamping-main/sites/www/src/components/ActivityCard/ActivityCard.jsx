@@ -139,7 +139,7 @@ export default function ActivityCard({ activity }) {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              "& .Mui-expanded": {
+              "&.Mui-expanded": {
                 minHeight: "56px",
                 borderBottomLeftRadius: expanded ? 0 : 0,
                 borderBottomRightRadius: expanded ? "50px" : "50px",
@@ -149,7 +149,7 @@ export default function ActivityCard({ activity }) {
                 justifyContent: "center",
                 flexGrow: 0,
               },
-              "& .MuiAccordionSummary-expandIconWrapper": {
+              "&.MuiAccordionSummary-expandIconWrapper": {
                 position: "absolute",
                 right: "65px",
                 top: "50%",
@@ -180,6 +180,7 @@ export default function ActivityCard({ activity }) {
             <Typography
               sx={{
                 fontFamily: "Zen Loop",
+                fontSize: "20px",
               }}
             >
               {activity.description}
