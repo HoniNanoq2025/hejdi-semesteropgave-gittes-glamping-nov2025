@@ -43,7 +43,7 @@ export default function ActivityCard({ activity }) {
           px: 3, //px: 3 = padding-left + padding-right: 24px
           textAlign: "center",
           zIndex: 3,
-          marginBottom: "-45px",
+          mb: "-50px",
           maxWidth: "320px",
         }}
       >
@@ -83,7 +83,7 @@ export default function ActivityCard({ activity }) {
           pt: 3,
           pb: 3,
           px: 3,
-          marginTop: "-30px",
+          marginTop: "-40px",
           maxWidth: "320px",
           zIndex: 3,
         }}
