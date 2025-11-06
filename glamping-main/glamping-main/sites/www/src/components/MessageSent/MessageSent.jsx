@@ -1,8 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Box, Typography, Button, Stack } from "@mui/material";
 
 export default function MessageSent() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { name, subject } = location.state || {};
 
   return (
     <Box
@@ -14,10 +16,11 @@ export default function MessageSent() {
     >
       <Stack spacing={0} alignItems="center" textAlign="center">
         <Typography sx={{ fontFamily: "Zen Loop", fontSize: "32px" }}>
-          Hej [INSERT NAME]
+          Hej {name ? `, ${name}` : ""}
         </Typography>
         <Typography sx={{ fontFamily: "Zen Loop", fontSize: "32px" }}>
-          Tak for din besked!
+          Tak for{" "}
+          {subject === "Booking" ? "din bookingforespørgsel" : "dit spørgsmål"}!
         </Typography>
         <Typography sx={{ fontFamily: "Zen Loop", fontSize: "32px" }}>
           Du hører fra os snarest.
