@@ -1,10 +1,7 @@
-import { useNavigate } from "react-router-dom";
-import { Box, Typography, Card, CardContent, Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import ActivityCard from "../ActivityCard/ActivityCard";
 
 export default function ActivityList({ activities }) {
-  const navigate = useNavigate();
-
   return (
     <Box
       display="flex"
