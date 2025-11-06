@@ -10,6 +10,7 @@ import ActivityDetails from "./pages/ActivityDetails/ActivityDetails";
 import MyList from "./pages/MyList/MyList";
 import Backoffice from "./pages/BackOffice/Backoffice";
 import Login from "./components/Login/Login";
+import MessageSent from "./components/MessageSent/MessageSent";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./App.module.css";
@@ -30,6 +31,7 @@ export default function App() {
           <Route path="/mylist" element={<MyList />} />
           <Route path="/backoffice" element={<Backoffice />} />
           <Route path="/auth/signin" element={<Login />} />
+          <Route path="/message-sent" element={<MessageSent />} />
         </Routes>
       </main>
       <Footer />

@@ -166,6 +166,7 @@ export default function StayDetails() {
           <Button
             className="book-button"
             variant="contained"
+            onClick={() => navigate("/contact")}
             sx={{
               backgroundColor: "#829B97",
               fontFamily: "Zen Loop",
@@ -178,7 +179,7 @@ export default function StayDetails() {
               mt: 8,
               boxShadow: "none",
               "&:hover": {
-                backgroundColor: "#C5B496",
+                backgroundColor: "#2A4F57",
                 color: "white",
                 border: "1px solid white",
               },
