@@ -76,7 +76,7 @@ export default function OverlappingSection({
                 fontSize: "40px",
                 fontWeight: 700,
                 "&:hover": {
-                  backgroundColor: "transparent", // fjern fyld
+                  backgroundColor: "#2A4F57", // fjern fyld
                   color: "white", // tekst forbliver hvid
                   border: "1px solid white",
                 },

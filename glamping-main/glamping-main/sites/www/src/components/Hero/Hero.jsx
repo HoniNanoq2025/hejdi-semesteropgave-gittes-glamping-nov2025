@@ -121,7 +121,7 @@ export default function Hero({
               py: 1.5, // py: 1.5 = padding-top + padding-bottom: 12px
               fontFamily: "Zen Loop",
               fontSize: "48px",
-              "&:hover": { backgroundColor: "#829B97" },
+              "&:hover": { backgroundColor: "#2A4F57" },
             }}
             onClick={props.onButtonClick}
           >

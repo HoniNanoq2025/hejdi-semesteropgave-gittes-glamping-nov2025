@@ -89,6 +89,7 @@ export default function StaysCard({ stay }) {
         onClick={handleReadMore}
         sx={{
           backgroundColor: "#829B97",
+          textTransform: "none",
           Height: "103px",
           width: "265px",
           fontFamily: "Zen Loop",
@@ -98,6 +99,11 @@ export default function StaysCard({ stay }) {
           borderBottomRightRadius: "50px",
           marginTop: "-45px",
           zIndex: 3,
+          "&:hover": {
+            backgroundColor: "#2A4F57",
+            color: "white",
+            border: "1px solid white",
+          },
         }}
       >
         Læs mere
