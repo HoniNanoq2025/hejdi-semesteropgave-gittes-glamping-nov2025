@@ -81,7 +81,7 @@ export default function OverlappingSection({
                   border: "1px solid white",
                 },
               }}
-              onClick={() => navigate("/activities")}
+              onClick={() => navigate("/stays")}
             >
               SE VORES OPHOLD
             </Button>

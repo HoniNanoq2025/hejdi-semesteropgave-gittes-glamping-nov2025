@@ -1,9 +1,12 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Card, CardMedia, Box, Typography, Button } from "@mui/material";
 
 export default function StaysCard({ stay }) {
   const navigate = useNavigate();
-  const { id } = useParams();
+
+  const handleReadMore = () => {
+    navigate(`/stay/${stay._id}`);
+  };
 
   return (
     <Card
@@ -80,6 +83,25 @@ export default function StaysCard({ stay }) {
           zIndex: 2,
         }}
       />
+
+      <Button
+        variant="contained"
+        onClick={handleReadMore}
+        sx={{
+          backgroundColor: "#829B97",
+          Height: "103px",
+          width: "265px",
+          fontFamily: "Zen Loop",
+          fontSize: "48px",
+          color: "white",
+          borderTopLeftRadius: "50px",
+          borderBottomRightRadius: "50px",
+          marginTop: "-45px",
+          zIndex: 3,
+        }}
+      >
+        Læs mere
+      </Button>
     </Card>
   );
 }
