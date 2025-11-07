@@ -71,6 +71,7 @@
 .form input::placeholder,
 .form textarea::placeholder {
   margin-left: 10px;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 /* Focus styling */
@@ -110,19 +111,22 @@
   width: 265px;
   background-color: #829b97;
   color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-top-left-radius: 50px;
   border-bottom-right-radius: 50px;
   font-family: "Zen Loop", cursive;
   font-size: 48px;
   cursor: pointer;
   transition: all 0.3s;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
+  margin-top: 20px;
 }
 
 .submitBtn:hover:not(:disabled) {
-  background-color: white;
-  color: #2a4f57;
+  background-color: #2a4f57;
+  color: white;
   border: 1px solid white;
   transform: scale(1.02);
 }
@@ -146,13 +150,13 @@
   .form select,
   .form textarea {
     width: 600px;
-    font-size: 20px;
+    font-size: 24px;
   }
 
   .form input,
-.form select {
-  height: 45px;
-}
+  .form select {
+    height: 45px;
+  }
 
   .textarea {
     max-height: 600px;
