@@ -12,17 +12,26 @@ export default function MessageSent() {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      sx={{ backgroundColor: "#2A4F57", height: "100vh" }}
+      sx={{
+        backgroundColor: "#2A4F57",
+        minHeight: "100dvh",
+      }}
     >
       <Stack spacing={0} alignItems="center" textAlign="center">
-        <Typography sx={{ fontFamily: "Zen Loop", fontSize: "32px" }}>
+        <Typography
+          sx={{ fontFamily: "Zen Loop", fontSize: "32px", color: "white" }}
+        >
           Hej {name ? `, ${name}` : ""}
         </Typography>
-        <Typography sx={{ fontFamily: "Zen Loop", fontSize: "32px" }}>
+        <Typography
+          sx={{ fontFamily: "Zen Loop", fontSize: "32px", color: "white" }}
+        >
           Tak for{" "}
           {subject === "booking" ? "din bookingforespørgsel" : "dit spørgsmål"}!
         </Typography>
-        <Typography sx={{ fontFamily: "Zen Loop", fontSize: "32px" }}>
+        <Typography
+          sx={{ fontFamily: "Zen Loop", fontSize: "32px", color: "white" }}
+        >
           Du hører fra os snarest.
         </Typography>
         <Button

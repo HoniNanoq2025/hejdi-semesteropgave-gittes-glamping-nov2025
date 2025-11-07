@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home/Home";
@@ -16,9 +16,11 @@ import "react-toastify/dist/ReactToastify.css";
 import styles from "./App.module.css";
 
 export default function App() {
+  const location = useLocation();
+  const hideHeaderFooter = location.pathname === "/message-sent";
   return (
     <div className={styles.app}>
-      <Header />
+      {!hideHeaderFooter && <Header />}
 
       <main className={styles.main}>
         <Routes>
@@ -34,7 +36,7 @@ export default function App() {
           <Route path="/message-sent" element={<MessageSent />} />
         </Routes>
       </main>
-      <Footer />
+      {!hideHeaderFooter && <Footer />}
       <ToastContainer position="top-center" autoClose={2500} />
     </div>
   );
