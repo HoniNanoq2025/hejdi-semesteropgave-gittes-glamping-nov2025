@@ -58,7 +58,39 @@ export const fetchReviews = async () => {
   }
 };
 
+// Fetch all contacts (hvis du har brug for det til backoffice)
+export const fetchContacts = async (token) => {
+  try {
+    const response = await fetch(`${API_URL}/contacts`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching contacts:", error);
+    throw error;
+  }
+};
+
 /* ====== CREATE ========  */
+
+// Create Contact
+export const createContact = async (formData) => {
+  try {
+    const response = await fetch(`${API_URL}/contact`, {
+      method: "POST",
+      body: formData,
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error creating contact:", error);
+    throw error;
+  }
+};
 
 // Create Activity (requires auth)
 export const createActivity = async (formData, token) => {

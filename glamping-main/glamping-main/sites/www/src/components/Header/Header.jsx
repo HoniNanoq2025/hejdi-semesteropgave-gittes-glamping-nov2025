@@ -39,7 +39,7 @@ const StyledNavLink = styled(NavLink)({
   transition: "color 0.2s ease",
   "&:hover, &.active": {
     color: "#2a4f57",
-    textDecoration: "underline",
+    fontSize: "2.5rem",
   },
 });
 

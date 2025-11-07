@@ -13,7 +13,9 @@
   justify-content: center;
   align-items: center;
   font-size: 93px;
+  color: white;
   gap: 15px;
+  margin-bottom: 20px;
 }
 
 .siteOwner {
@@ -26,4 +28,5 @@
 .siteOwner p {
   font-family: "Zen Loop", sans-serif;
   font-size: 40px;
+  color: white;
 }

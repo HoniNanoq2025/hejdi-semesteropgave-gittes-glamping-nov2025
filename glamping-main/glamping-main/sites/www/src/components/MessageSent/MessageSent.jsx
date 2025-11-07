@@ -20,7 +20,7 @@ export default function MessageSent() {
         </Typography>
         <Typography sx={{ fontFamily: "Zen Loop", fontSize: "32px" }}>
           Tak for{" "}
-          {subject === "Booking" ? "din bookingforespørgsel" : "dit spørgsmål"}!
+          {subject === "booking" ? "din bookingforespørgsel" : "dit spørgsmål"}!
         </Typography>
         <Typography sx={{ fontFamily: "Zen Loop", fontSize: "32px" }}>
           Du hører fra os snarest.

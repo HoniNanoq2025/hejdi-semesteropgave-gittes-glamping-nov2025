@@ -1,0 +1,160 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 330px;
+  margin: 1rem auto;
+  padding: 1rem;
+  background-color: transparent;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 600px;
+}
+
+.formGroup label {
+  text-align: center;
+  font-family: "Zen Loop", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: white;
+}
+
+.form input,
+.form select,
+.form textarea {
+  width: 330px;
+  padding: 5px;
+  border: 1px solid white;
+  background-color: transparent;
+  color: white;
+  font-size: 1.2rem;
+  font-family: "Zen Loop", sans-serif;
+  outline: none;
+  transition: all 0.3s;
+  padding-left: 15px;
+}
+
+.form input,
+.form select {
+  border-radius: 50px;
+  height: 35px;
+}
+
+.form textarea {
+  border-radius: 25px;
+  min-height: 243px;
+  max-height: 400px;
+  padding-top: 12px;
+  padding-right: 12px;
+  padding-bottom: 12px;
+}
+
+.form input::placeholder,
+.form textarea::placeholder {
+  margin-left: 10px;
+}
+
+/* Focus styling */
+.form input:focus,
+.form select:focus,
+.form textarea:focus {
+  border-color: #c5b496;
+  box-shadow: 0 0 10px rgba(197, 180, 150, 0.5);
+}
+
+/* Select dropdown specifics */
+.form select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='white' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+.form select option {
+  font-family: "Zen Loop", sans-serif;
+  font-size: 16px;
+  background-color: #c5b496;
+  color: white;
+}
+
+.form textarea {
+  border-radius: 25px;
+  resize: vertical;
+  min-height: 150px;
+  padding: 1rem 1.5rem;
+}
+
+.submitBtn {
+  height: 103px;
+  width: 265px;
+  background-color: #829b97;
+  color: white;
+  border-top-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+  font-family: "Zen Loop", cursive;
+  font-size: 48px;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.submitBtn:hover:not(:disabled) {
+  background-color: white;
+  color: #2a4f57;
+  border: 1px solid white;
+  transform: scale(1.02);
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.submitBtn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+@media (min-width: 768px) {
+  .container {
+    margin: 2rem auto;
+    padding: 2rem;
+  }
+
+  .form input,
+  .form select,
+  .form textarea {
+    width: 600px;
+    font-size: 20px;
+  }
+
+  .form input,
+.form select {
+  height: 45px;
+}
+
+  .textarea {
+    max-height: 600px;
+  }
+}
