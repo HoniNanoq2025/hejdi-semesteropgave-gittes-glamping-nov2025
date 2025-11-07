@@ -17,7 +17,9 @@ import styles from "./App.module.css";
 
 export default function App() {
   const location = useLocation();
-  const hideHeaderFooter = location.pathname === "/message-sent";
+  const hideHeaderFooter = ["/message-sent", "/backoffice"].includes(
+    location.pathname
+  );
   return (
     <div className={styles.app}>
       {!hideHeaderFooter && <Header />}
