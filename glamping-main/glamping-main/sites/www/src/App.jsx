@@ -22,6 +22,7 @@ export default function App() {
   );
   return (
     <div className={styles.app}>
+      {/* ! = hvis du er på message-sent eller backoffice hideHeaderFooter = true, ellers er den false */}
       {!hideHeaderFooter && <Header />}
 
       <main className={styles.main}>
