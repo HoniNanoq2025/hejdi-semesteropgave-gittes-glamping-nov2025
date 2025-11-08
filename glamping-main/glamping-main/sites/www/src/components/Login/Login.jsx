@@ -2,6 +2,7 @@ import { useLocalStorage } from "@uidotdev/usehooks";
 import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { signIn } from "../../api/fetch";
 import { toast } from "react-toastify";
 import { Button } from "@mui/material";
 import styles from "./Login.module.css";
@@ -10,32 +11,22 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [, setToken] = useLocalStorage("token", null);
-  const navigate = useNavigate;
-
-  const API_URL = import.meta.env.VITE_API_BASE_URL;
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${API_URL}/auth/signin`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const data = await signIn(email, password);
 
-      const data = await res.json();
+      toast.success("Login succesfuld");
+      setToken(data.data.token);
 
-      if (res.ok) {
-        toast.success("Login succesfuld");
-        setToken(data.token);
-
-        const user = jwtDecode(data.token);
-        if (user.role === "admin") navigate("/backoffice");
-        else navigate("/mylist");
-      } else toast.error(data.message || "Ugyldigt login");
+      const user = jwtDecode(data.data.token);
+      if (user.role === "admin") navigate("/backoffice");
+      else navigate("/mylist");
     } catch (err) {
       console.error(err);
-      toast.error("Noget gik galt ved login");
+      toast.error(err.message || "Noget gik galt ved login");
     }
   };
 

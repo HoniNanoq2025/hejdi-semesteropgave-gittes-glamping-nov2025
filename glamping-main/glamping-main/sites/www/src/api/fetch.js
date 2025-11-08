@@ -77,6 +77,27 @@ export const fetchContacts = async (token) => {
 
 /* ====== POST ========  */
 
+// Auth
+export const signIn = async (email, password) => {
+  try {
+    const response = await fetch(`${API_URL}/auth/signin`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await response.json();
+    
+    if (data.status === 'error') {
+      throw new Error(data.message || 'Login failed');
+    }
+    
+    return data;
+  } catch (error) {
+    console.error("Error signing in:", error);
+    throw error;
+  }
+};
+
 // Create Contact
 export const createContact = async (formData) => {
   try {
