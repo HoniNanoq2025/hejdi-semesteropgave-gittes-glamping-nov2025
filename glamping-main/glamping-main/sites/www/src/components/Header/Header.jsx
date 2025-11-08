@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useLocalStorage } from "@uidotdev/usehooks";
+import { toast } from "react-toastify";
 import {
   AppBar,
   Box,
@@ -45,9 +47,18 @@ const StyledNavLink = styled(NavLink)({
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [token, setToken] = useLocalStorage("token", null);
   const handleLinkClick = () => setMenuOpen(false);
+  const navigate = useNavigate();
   const location = useLocation();
   const isFrontPage = location.pathname === "/";
+
+  const handleLogout = () => {
+    setToken(null);
+    toast.info("Du er nu logget ud");
+    handleLinkClick();
+    navigate("/");
+  };
 
   return (
     /* MUI Application Bar - bruges typisk til headers og navbars */
@@ -152,6 +163,19 @@ export default function Header() {
                 Backoffice
               </StyledNavLink>
             </ListItem>
+            {token ? (
+              <ListItem sx={{ padding: 0, justifyContent: "center" }}>
+                <StyledNavLink to="/" onClick={handleLogout}>
+                  Logout
+                </StyledNavLink>
+              </ListItem>
+            ) : (
+              <ListItem sx={{ padding: 0, justifyContent: "center" }}>
+                <StyledNavLink to="/auth/signin" onClick={handleLinkClick}>
+                  Login
+                </StyledNavLink>
+              </ListItem>
+            )}
           </List>
         </Drawer>
       </Toolbar>

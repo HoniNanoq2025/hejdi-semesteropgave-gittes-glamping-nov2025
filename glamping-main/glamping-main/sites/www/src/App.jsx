@@ -1,6 +1,7 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import Home from "./pages/Home/Home";
 import Activities from "./pages/Activities/Activities";
 import Contact from "./pages/Contact/Contact";
@@ -36,8 +37,22 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/stays" element={<Stays />} />
           <Route path="/stay/:id" element={<StayDetails />} />
-          <Route path="/mylist" element={<MyList />} />
-          <Route path="/backoffice" element={<Backoffice />} />
+          <Route
+            path="/mylist"
+            element={
+              <ProtectedRoute allowedRoles={["guest", "admin"]}>
+                <MyList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/backoffice"
+            element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <Backoffice />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/auth/signin" element={<Login />} />
           <Route path="/message-sent" element={<MessageSent />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
