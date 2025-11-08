@@ -11,18 +11,21 @@ import MyList from "./pages/MyList/MyList";
 import Backoffice from "./pages/BackOffice/Backoffice";
 import Login from "./components/Login/Login";
 import MessageSent from "./components/MessageSent/MessageSent";
+import Unauthorized from "./components/Unauthorized/Unauthorized";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./App.module.css";
 
 export default function App() {
   const location = useLocation();
-  const hideHeaderFooter = ["/message-sent", "/backoffice"].includes(
-    location.pathname
-  );
+  const hideHeaderFooter = [
+    "/message-sent",
+    "/backoffice",
+    "/unauthorized",
+  ].includes(location.pathname);
   return (
     <div className={styles.app}>
-      {/* ! = hvis du er på message-sent eller backoffice hideHeaderFooter = true, ellers er den false */}
+      {/* ! = hvis du er på message-sent eller backoffice er hideHeaderFooter = true, ellers er den false */}
       {!hideHeaderFooter && <Header />}
 
       <main className={styles.main}>
@@ -37,6 +40,7 @@ export default function App() {
           <Route path="/backoffice" element={<Backoffice />} />
           <Route path="/auth/signin" element={<Login />} />
           <Route path="/message-sent" element={<MessageSent />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
         </Routes>
       </main>
       {!hideHeaderFooter && <Footer />}
