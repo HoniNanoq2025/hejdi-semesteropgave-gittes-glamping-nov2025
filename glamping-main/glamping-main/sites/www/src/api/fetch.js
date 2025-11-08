@@ -75,7 +75,7 @@ export const fetchContacts = async (token) => {
   }
 };
 
-/* ====== CREATE ========  */
+/* ====== POST ========  */
 
 // Create Contact
 export const createContact = async (formData) => {
@@ -140,7 +140,7 @@ export const createReview = async (formData) => {
   }
 };
 
-/* ====== UPDATE ========  */
+/* ====== PUT ========  */
 
 // Update Activity (requires auth)
 export const updateActivity = async (formData, token) => {
