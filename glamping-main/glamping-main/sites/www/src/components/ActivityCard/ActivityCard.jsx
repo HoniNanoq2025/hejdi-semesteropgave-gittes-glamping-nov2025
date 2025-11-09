@@ -11,10 +11,24 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 export default function ActivityCard({ activity }) {
-  const [favorite, setFavorite] = useState(false);
+  const [favorites, setFavorites] = useLocalStorage("favorites", []);
   const [expanded, setExpanded] = useState(false);
+
+  const favorite = favorites.includes(activity._id);
+
+  // Toggle favorit
+  const toggleFavorite = () => {
+    let updated;
+    if (favorite) {
+      updated = favorites.filter((id) => id !== activity._id);
+    } else {
+      updated = [...favorites, activity._id];
+    }
+    setFavorites(updated);
+  };
 
   return (
     <Card
@@ -113,7 +127,7 @@ export default function ActivityCard({ activity }) {
 
           {/* Favorite Icon */}
           <IconButton
-            onClick={() => setFavorite(!favorite)} // Toggle mellem favorit/ikke-favorit
+            onClick={toggleFavorite} // Toggle mellem favorit/ikke-favorit
             sx={{
               color: favorite ? "white" : "#ffffff2e", // Ternary operator: Skift farve baseret på favorit-status
               width: "45px",
