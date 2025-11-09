@@ -11,6 +11,8 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [, setToken] = useLocalStorage("token", null);
+  const [, setUserEmail] = useLocalStorage("userEmail", null);
+  const [, setUserName] = useLocalStorage("userName", null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -21,7 +23,14 @@ export default function Login() {
       toast.success("Login succesfuld");
       setToken(data.data.token);
 
+      // Decode JWT token for at få brugerdata
       const user = jwtDecode(data.data.token);
+
+      // Gem brugerdata i localStorage
+      setUserEmail(user.email);
+      setUserName(user.name);
+
+      // Navigate baseret på rolle
       if (user.role === "admin") navigate("/backoffice");
       else navigate("/mylist");
     } catch (err) {

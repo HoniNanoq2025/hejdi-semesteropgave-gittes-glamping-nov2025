@@ -1,17 +1,23 @@
 import { useState, useEffect } from "react";
 import { Box, Typography, CircularProgress, Grid, Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import SaveIcon from "@mui/icons-material/Save";
 import Hero from "../../components/Hero/Hero";
 import ActivityCard from "../../components/ActivityCard/ActivityCard";
-import { fetchActivities } from "../../api/fetch";
+import { fetchActivities, saveMyList } from "../../api/fetch";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { toast } from "react-toastify";
 import heroMyList from "../../assets/image_05.jpg";
 
 export default function MyList() {
   const [favorites, setFavorites] = useLocalStorage("favorites", []);
+  const [token] = useLocalStorage("token", null);
+  const [userEmail] = useLocalStorage("userEmail");
+  const [userName] = useLocalStorage("userName");
+
   const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     const getActivities = async () => {
@@ -30,6 +36,35 @@ export default function MyList() {
     getActivities();
   }, []);
 
+  // Gem liste til backend
+  const saveListToBackend = async () => {
+    setSaving(true);
+    try {
+      if (!token) {
+        toast.error("Du skal være logget ind for at gemme listen");
+        setSaving(false);
+        return;
+      }
+
+      const result = await saveMyList(
+        userEmail || "anonymous@glamping.dk",
+        favorites,
+        token
+      );
+
+      if (result.status === "ok") {
+        toast.success("Listen bliver gemt til din profil!");
+      } else {
+        toast.error(result.message || "Kunne ikke gemme listen");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Fejl ved lagring af listen");
+    } finally {
+      setSaving(false);
+    }
+  };
+
   // Filtrer aktiviteter baseret på favoritter
   const favoriteActivities = activities.filter((activity) =>
     favorites.includes(activity._id)
@@ -40,6 +75,7 @@ export default function MyList() {
   const handleClearAll = () => {
     if (window.confirm("Er du sikker på at du vil fjerne alle favoritter?")) {
       setFavorites([]);
+      toast.info("Favoritter ryddet");
     }
   };
 
@@ -52,7 +88,7 @@ export default function MyList() {
         minHeight={{ xs: "80vh", md: "100vh" }}
       />
 
-      {/* Header Box - overlapper billede */}
+      {/* Header Box - overlapper Hero */}
       <Box
         className="myList-header-container"
         sx={{
@@ -100,30 +136,78 @@ export default function MyList() {
             {favoriteCount}
           </Typography>
 
-          {/* Clear All button */}
+          {/* Action buttons */}
           {favoriteCount > 0 && (
-            <Button
-              variant="outlined"
-              /* startIcon={<DeleteIcon fontSize="large" />} */
-              onClick={handleClearAll}
+            <Box
               sx={{
-                color: "white",
-                borderColor: "white",
-                borderTopLeftRadius: "25px",
-                borderBottomRightRadius: "25px",
-                borderTopRightRadius: 0,
-                borderBottomLeftRadius: 0,
-                px: { xs: 2, sm: 4 }, //px: 2 = padding-left + padding-right: 16px / 32px
-                py: 1.5, // py: 1.5 = padding-top + padding-bottom: 12px
-                fontFamily: "Zen Loop",
-                fontSize: "48px",
-                lineHeight: 1,
-                "&:hover": { backgroundColor: "#2A4F57" },
+                display: "flex",
+                gap: 2,
+                justifyContent: "center",
+                flexWrap: "wrap",
               }}
             >
-              <DeleteIcon sx={{ fontSize: 48, mr: 1, mb: 0.5 }} />
-              Ryd favoritter
-            </Button>
+              {/* Gem liste button */}
+              <Button
+                variant="contained"
+                onClick={saveListToBackend}
+                disabled={saving}
+                sx={{
+                  backgroundColor: "#829B97",
+                  border: "1px solid #829B97",
+                  color: "white",
+                  borderTopLeftRadius: "25px",
+                  borderBottomRightRadius: "25px",
+                  borderTopRightRadius: 0,
+                  borderBottomLeftRadius: 0,
+                  px: { xs: 2, sm: 4 },
+                  py: 1.5,
+                  fontFamily: "Zen Loop",
+                  fontSize: { xs: "32px", sm: "40px" },
+                  lineHeight: 1,
+                  textTransform: "none",
+                  "&:hover": {
+                    backgroundColor: "#2A4F57",
+                    border: "1px solid white",
+                    boxShadow: "none",
+                  },
+                  "&:disabled": { backgroundColor: "#999" },
+                }}
+              >
+                <SaveIcon
+                  sx={{ fontSize: { xs: 32, sm: 40 }, mr: 1, mb: 0.5 }}
+                />
+                {saving ? "Gemmer..." : "Gem liste"}
+              </Button>
+
+              {/* Clear All button */}
+              <Button
+                variant="outlined"
+                onClick={handleClearAll}
+                sx={{
+                  color: "white",
+                  borderColor: "white",
+                  borderTopLeftRadius: "25px",
+                  borderBottomRightRadius: "25px",
+                  borderTopRightRadius: 0,
+                  borderBottomLeftRadius: 0,
+                  px: { xs: 2, sm: 4 },
+                  py: 1.5,
+                  fontFamily: "Zen Loop",
+                  fontSize: { xs: "32px", sm: "40px" },
+                  lineHeight: 1,
+                  textTransform: "none",
+                  "&:hover": {
+                    backgroundColor: "#2A4F57",
+                    borderColor: "white",
+                  },
+                }}
+              >
+                <DeleteIcon
+                  sx={{ fontSize: { xs: 32, sm: 40 }, mr: 1, mb: 0.5 }}
+                />
+                Ryd favoritter
+              </Button>
+            </Box>
           )}
         </Box>
       </Box>

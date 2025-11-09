@@ -86,16 +86,38 @@ export const signIn = async (email, password) => {
       body: JSON.stringify({ email, password }),
     });
     const data = await response.json();
-    
-    if (data.status === 'error') {
-      throw new Error(data.message || 'Login failed');
+
+    if (data.status === "error") {
+      throw new Error(data.message || "Login failed");
     }
-    
+
     return data;
   } catch (error) {
     console.error("Error signing in:", error);
     throw error;
   }
+};
+
+// Save MyList
+export const saveMyList = async (email, activityIds, token) => {
+  // Konverter array til comma-separated string som backend forventer
+  const activityIdsString = Array.isArray(activityIds)
+    ? activityIds.join(",")
+    : activityIds;
+
+  const response = await fetch(`${API_URL}/mylist/save`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      email: email,
+      activityIds: activityIdsString,
+    }),
+  });
+
+  return await response.json();
 };
 
 // Create Contact
