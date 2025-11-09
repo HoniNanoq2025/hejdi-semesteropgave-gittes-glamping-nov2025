@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useLocalStorage } from "@uidotdev/usehooks";
+import { jwtDecode } from "jwt-decode";
 import { toast } from "react-toastify";
 import {
   AppBar,
@@ -52,6 +53,18 @@ export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const isFrontPage = location.pathname === "/";
+
+  // Tjek brugerens rolle
+  let userRole = null;
+  if (token) {
+    try {
+      const user = jwtDecode(token);
+      userRole = user.role;
+    } catch (err) {
+      console.error("Ugyldig token", err);
+      toast.error("Ugyldig token");
+    }
+  }
 
   const handleLogout = () => {
     setToken(null);
@@ -158,11 +171,16 @@ export default function Header() {
                 Min liste
               </StyledNavLink>
             </ListItem>
-            <ListItem sx={{ padding: 0, justifyContent: "center" }}>
-              <StyledNavLink to="/backoffice" onClick={handleLinkClick}>
-                Backoffice
-              </StyledNavLink>
-            </ListItem>
+
+            {/* Vis kun Backoffice link efter login, hvis bruger er admin */}
+            {userRole === "admin" && (
+              <ListItem sx={{ padding: 0, justifyContent: "center" }}>
+                <StyledNavLink to="/backoffice" onClick={handleLinkClick}>
+                  Backoffice
+                </StyledNavLink>
+              </ListItem>
+            )}
+
             {token ? (
               <ListItem sx={{ padding: 0, justifyContent: "center" }}>
                 <StyledNavLink to="/" onClick={handleLogout}>
