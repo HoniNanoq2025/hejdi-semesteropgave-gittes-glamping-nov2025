@@ -24,7 +24,7 @@ export default function UserTable({ users, onSelect, onDelete }) {
 
       if (result.message && result.message.includes("successfully")) {
         toast.success("User deleted successfully");
-        onDelete(id);
+        onDelete(id); // fortæller parent-komponenten: har lige slettet brugeren med id = 123 — opdater state!
       } else {
         toast.error(result.message || "Failed to delete user");
       }
