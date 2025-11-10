@@ -95,6 +95,8 @@ export default function ReviewForm({
         backgroundColor: "white",
         boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
         borderRadius: "8px",
+        width: "100%", // fylder hele Grid item
+        maxWidth: { xs: "100%", md: "550px", lg: "650px", xl: "1100px" },
       }}
     >
       <Typography

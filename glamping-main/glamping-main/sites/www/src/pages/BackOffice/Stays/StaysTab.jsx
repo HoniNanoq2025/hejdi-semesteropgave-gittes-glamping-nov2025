@@ -67,7 +67,7 @@ export default function StaysTab() {
         </Alert>
       )}
 
-      <Box sx={{ mb: { xs: 3, md: 4 }, maxWidth: { md: "900px" } }}>
+      <Box sx={{ mb: { xs: 3, md: 4 }, maxWidth: { lg: "1100px" } }}>
         <StayTable
           stays={stays}
           onSelect={setSelectedStay}

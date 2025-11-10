@@ -50,6 +50,7 @@ export default function ContactsTab() {
           mb: 2,
           fontWeight: 600,
           fontSize: { xs: "1.125rem", md: "1.25rem" },
+          color: "black",
         }}
       >
         {title}
@@ -121,7 +122,7 @@ export default function ContactsTab() {
                       maxWidth: 300,
                       overflow: "hidden",
                       textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
+                      whiteSpace: "wrap",
                       fontSize: { xs: "0.875rem", md: "1rem" },
                     }}
                   >
@@ -148,6 +149,7 @@ export default function ContactsTab() {
           mb: 3,
           fontWeight: 600,
           fontSize: { xs: "1.5rem", md: "1.75rem" },
+          color: "black",
         }}
       >
         Contacts Management

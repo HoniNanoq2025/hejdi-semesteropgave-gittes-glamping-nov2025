@@ -77,7 +77,7 @@ export default function ReviewsTab() {
       </Box>
 
       <Grid container spacing={{ xs: 2, md: 4 }}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} lg={6}>
           <ReviewForm
             mode="create"
             onSave={handleSave}
@@ -85,7 +85,7 @@ export default function ReviewsTab() {
             onSuccess={loadReviews}
           />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} lg={6}>
           <ReviewForm
             mode="update"
             review={selectedReview}
