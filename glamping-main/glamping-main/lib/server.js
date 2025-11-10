@@ -23,6 +23,7 @@ import activitiesRoute from './routes/activities/activities.routes.js';
 import activityRoute from './routes/activities/activity.routes.js';
 import contactsRoute from './routes/contacts/contacts.routes.js';
 import contactRoute from './routes/contacts/contact.routes.js';
+import myListRoute from "./routes/myList/myList.routes.js";
 
 import * as path from 'path';
 import * as url from 'url';
@@ -79,6 +80,8 @@ expressServer.use(activitiesRoute);
 expressServer.use(contactsRoute);
 expressServer.use(contactRoute);
 
+// MyList - TILFØJ DENNE!
+expressServer.use(myListRoute);
 
 // POC
 expressServer.use(express.static(path.join(__dirname, "../sites", "poc")));

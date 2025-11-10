@@ -100,21 +100,23 @@ export const signIn = async (email, password) => {
 
 // Save MyList
 export const saveMyList = async (email, activityIds, token) => {
+  // Create FormData (backend expects this format)
+  const formData = new FormData();
+  formData.append("email", email);
+
   // Konverter array til comma-separated string som backend forventer
   const activityIdsString = Array.isArray(activityIds)
     ? activityIds.join(",")
     : activityIds;
 
+  formData.append("activityIds", activityIdsString);
+
   const response = await fetch(`${API_URL}/mylist/save`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({
-      email: email,
-      activityIds: activityIdsString,
-    }),
+    body: formData,
   });
 
   return await response.json();
