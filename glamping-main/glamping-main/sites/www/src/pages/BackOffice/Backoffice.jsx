@@ -5,6 +5,7 @@ import ActivitiesTab from "./Activities/ActivitiesTab";
 import StaysTab from "./Stays/StaysTab";
 import ReviewsTab from "./Reviews/ReviewsTab";
 import ContactsTab from "./Contacts/ContactsTab";
+import UsersTab from "./Users/UsersTab";
 
 export default function Backoffice() {
   const [tabIndex, setTabIndex] = useState(0);
@@ -64,6 +65,14 @@ export default function Backoffice() {
             fontFamily: "Be Vietnam Pro",
           }}
         />
+
+        <Tab
+          label="Users"
+          sx={{
+            fontSize: { xs: "0.875rem", md: "1rem" },
+            fontFamily: "Be Vietnam Pro",
+          }}
+        />
       </Tabs>
 
       {/* Link til frontend */}
@@ -87,6 +96,7 @@ export default function Backoffice() {
       {tabIndex === 1 && <StaysTab />}
       {tabIndex === 2 && <ReviewsTab />}
       {tabIndex === 3 && <ContactsTab />}
+      {tabIndex === 4 && <UsersTab />}
     </Box>
   );
 }

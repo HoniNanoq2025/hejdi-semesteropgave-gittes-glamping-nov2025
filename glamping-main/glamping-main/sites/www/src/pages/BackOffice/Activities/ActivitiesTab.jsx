@@ -78,7 +78,7 @@ export default function ActivitiesTab() {
       </Box>
 
       <Grid container spacing={{ xs: 2, md: 4 }}>
-        <Grid item xs={12} lg={6}>
+        <Grid size={{ xs: 12, lg: 6 }}>
           <ActivityForm
             mode="create"
             onSave={handleSave}
@@ -86,7 +86,7 @@ export default function ActivitiesTab() {
             onSuccess={loadActivities}
           />
         </Grid>
-        <Grid item xs={12} lg={6}>
+        <Grid size={{ xs: 12, lg: 6 }}>
           <ActivityForm
             mode="update"
             activity={selectedActivity}

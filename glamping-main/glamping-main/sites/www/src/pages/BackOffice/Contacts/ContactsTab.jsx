@@ -43,7 +43,7 @@ export default function ContactsTab() {
   );
 
   const renderTable = (title, data) => (
-    <Grid item xs={12} lg={6}>
+    <Grid size={{ xs: 12, lg: 6 }}>
       <Typography
         variant="h6"
         sx={{

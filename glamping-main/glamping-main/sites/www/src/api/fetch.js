@@ -75,6 +75,11 @@ export const fetchContacts = async (token) => {
   }
 };
 
+export const fetchUsers = async () => {
+  const response = await fetch(`${API_URL}/users`);
+  return await response.json();
+};
+
 /* ====== POST ========  */
 
 // Auth
@@ -94,6 +99,25 @@ export const signIn = async (email, password) => {
     return data;
   } catch (error) {
     console.error("Error signing in:", error);
+    throw error;
+  }
+};
+
+// Create User (requires auth)
+export const createUser = async (formData, token) => {
+  try {
+    const response = await fetch(`${API_URL}/user`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error creating user:", error);
     throw error;
   }
 };
@@ -201,6 +225,28 @@ export const updateActivity = async (formData, token) => {
     return data;
   } catch (error) {
     console.error("Error updating activity:", error);
+    throw error;
+  }
+};
+
+// Update User (requires auth)
+export const updateUser = async (formData, token, userId) => {
+  try {
+    // Tilføj id til formData hvis nødvendigt
+    if (userId) formData.append("id", userId);
+
+    const response = await fetch(`${API_URL}/user`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error updating user:", error);
     throw error;
   }
 };

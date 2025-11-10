@@ -1,51 +1,51 @@
 import { useState, useEffect } from "react";
 import { Grid, Typography, Alert, Box } from "@mui/material";
-import StayTable from "./StayTable";
-import StayForm from "./StayForm";
-import { fetchStays } from "../../../api/fetch";
+import UserTable from "./UserTable";
+import UserForm from "./UserForm";
+import { fetchUsers } from "../../../api/fetch";
 
-export default function StaysTab() {
-  const [stays, setStays] = useState([]);
-  const [selectedStay, setSelectedStay] = useState(null);
+export default function UsersTab() {
+  const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    loadStays();
+    loadUsers();
   }, []);
 
-  const loadStays = async () => {
+  const loadUsers = async () => {
     try {
       setLoading(true);
-      const data = await fetchStays();
-      setStays(data.data || []);
+      const data = await fetchUsers();
+      setUsers(data.data || []);
       setError(null);
     } catch (err) {
-      setError("Failed to load stays");
+      setError("Failed to load users");
       console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSave = (stay) => {
-    if (selectedStay) {
-      setStays((prev) => prev.map((s) => (s._id === stay._id ? stay : s)));
+  const handleSave = (user) => {
+    if (selectedUser) {
+      setUsers((prev) => prev.map((u) => (u._id === user._id ? user : u)));
     } else {
-      setStays((prev) => [...prev, stay]);
+      setUsers((prev) => [...prev, user]);
     }
-    setSelectedStay(null);
+    setSelectedUser(null);
   };
 
   const handleDelete = (id) => {
-    setStays((prev) => prev.filter((s) => s._id !== id));
-    if (selectedStay?._id === id) {
-      setSelectedStay(null);
+    setUsers((prev) => prev.filter((u) => u._id !== id));
+    if (selectedUser?._id === id) {
+      setSelectedUser(null);
     }
   };
 
   if (loading) {
-    return <Typography>Loading stays...</Typography>;
+    return <Typography>Loading users...</Typography>;
   }
 
   return (
@@ -59,7 +59,7 @@ export default function StaysTab() {
           color: "black",
         }}
       >
-        Stays Management
+        Users Management
       </Typography>
       {error && (
         <Alert severity="error" sx={{ mb: 2 }}>
@@ -67,30 +67,30 @@ export default function StaysTab() {
         </Alert>
       )}
 
-      <Box sx={{ mb: { xs: 3, md: 4 }, maxWidth: { lg: "1100px" } }}>
-        <StayTable
-          stays={stays}
-          onSelect={setSelectedStay}
+      <Box sx={{ mb: { xs: 3, md: 4 }, maxWidth: { md: "900px" } }}>
+        <UserTable
+          users={users}
+          onSelect={setSelectedUser}
           onDelete={handleDelete}
         />
       </Box>
 
       <Grid container spacing={{ xs: 2, md: 4 }}>
         <Grid size={{ xs: 12, lg: 6 }}>
-          <StayForm
+          <UserForm
             mode="create"
             onSave={handleSave}
-            disabled={!!selectedStay}
-            onSuccess={loadStays}
+            disabled={!!selectedUser}
+            onSuccess={loadUsers}
           />
         </Grid>
         <Grid size={{ xs: 12, lg: 6 }}>
-          <StayForm
+          <UserForm
             mode="update"
-            stay={selectedStay}
+            user={selectedUser}
             onSave={handleSave}
-            onCancel={() => setSelectedStay(null)}
-            onSuccess={loadStays}
+            onCancel={() => setSelectedUser(null)}
+            onSuccess={loadUsers}
           />
         </Grid>
       </Grid>
