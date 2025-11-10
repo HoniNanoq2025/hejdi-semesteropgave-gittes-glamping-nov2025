@@ -1,3 +1,4 @@
+import { deleteUser } from "../../../api/fetch";
 import {
   Table,
   TableHead,
@@ -19,17 +20,7 @@ export default function UserTable({ users, onSelect, onDelete }) {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/user/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      const result = await response.json();
+      const result = await deleteUser(id, token); // fra api/fetch.js
 
       if (result.message && result.message.includes("successfully")) {
         toast.success("User deleted successfully");

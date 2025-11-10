@@ -333,3 +333,24 @@ export const deleteReview = async (id, token) => {
     throw error;
   }
 };
+
+// Delete User (requires auth)
+export const deleteUser = async (id, token) => {
+  try {
+    const response = await fetch(`${API_URL}/user/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    // nogle endpoints returnerer måske tom body → håndter det sikkert
+    const text = await response.text();
+    const data = text ? JSON.parse(text) : {};
+
+    return data;
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    throw error;
+  }
+};
