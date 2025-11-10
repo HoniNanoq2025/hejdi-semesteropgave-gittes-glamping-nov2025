@@ -11,6 +11,7 @@ import ActivityDetails from "./pages/ActivityDetails/ActivityDetails";
 import MyList from "./pages/MyList/MyList";
 import Backoffice from "./pages/BackOffice/Backoffice";
 import Login from "./components/Login/Login";
+import Signup from "./components/Signup/Signup";
 import MessageSent from "./components/MessageSent/MessageSent";
 import Unauthorized from "./components/Unauthorized/Unauthorized";
 import { ToastContainer } from "react-toastify";
@@ -54,6 +55,7 @@ export default function App() {
             }
           />
           <Route path="/auth/signin" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/message-sent" element={<MessageSent />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
         </Routes>

@@ -68,6 +68,9 @@ export default function Header() {
 
   const handleLogout = () => {
     setToken(null);
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("userPassword");
     toast.info("Du er nu logget ud");
     handleLinkClick();
     navigate("/");

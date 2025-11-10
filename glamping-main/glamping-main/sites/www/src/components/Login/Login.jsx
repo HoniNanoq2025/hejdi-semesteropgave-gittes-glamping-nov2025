@@ -4,8 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signIn } from "../../api/fetch";
 import { toast } from "react-toastify";
-import { Button } from "@mui/material";
-import styles from "./Login.module.css";
+import { Button, TextField, Box, Typography } from "@mui/material";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -40,28 +39,136 @@ export default function Login() {
   };
 
   return (
-    <div className={styles.loginContainer}>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <div className={styles.formGroup}>
-          <label htmlFor="email">Email</label>
-          <input
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: "#33626c",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+        height: "100dvh",
+      }}
+    >
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 1.5,
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 0.5,
+            maxWidth: "600px",
+          }}
+        >
+          <Typography
+            component="label"
+            htmlFor="email"
+            sx={{
+              textAlign: "center",
+              fontFamily: "Zen Loop",
+              fontSize: "24px",
+              fontWeight: 400,
+              color: "white",
+            }}
+          >
+            Email
+          </Typography>
+          <TextField
+            id="email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            aria-label="email"
             required
+            sx={{
+              width: { xs: "330px", md: "600px" },
+              "& .MuiOutlinedInput-root": {
+                height: { xs: "35px", md: "45px" },
+                borderRadius: "50px",
+                backgroundColor: "transparent",
+                "& fieldset": {
+                  borderColor: "white",
+                },
+                "&:hover fieldset": {
+                  borderColor: "white",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "#c5b496",
+                  boxShadow: "0 0 10px rgba(197, 180, 150, 0.5)",
+                },
+                "& input": {
+                  color: "white",
+                  fontSize: { xs: "1.2rem", md: "24px" },
+                  fontFamily: "Zen Loop",
+                  paddingLeft: "15px",
+                },
+              },
+            }}
           />
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="password">Password</label>
-          <input
+        </Box>
+
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 0.5,
+            maxWidth: "600px",
+          }}
+        >
+          <Typography
+            component="label"
+            htmlFor="password"
+            sx={{
+              textAlign: "center",
+              fontFamily: "Zen Loop",
+              fontSize: "24px",
+              fontWeight: 400,
+              color: "white",
+            }}
+          >
+            Password
+          </Typography>
+          <TextField
+            id="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            aria-label="password"
             required
+            sx={{
+              width: { xs: "330px", md: "600px" },
+              "& .MuiOutlinedInput-root": {
+                height: { xs: "35px", md: "45px" },
+                borderRadius: "50px",
+                backgroundColor: "transparent",
+                "& fieldset": {
+                  borderColor: "white",
+                },
+                "&:hover fieldset": {
+                  borderColor: "white",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "#c5b496",
+                  boxShadow: "0 0 10px rgba(197, 180, 150, 0.5)",
+                },
+                "& input": {
+                  color: "white",
+                  fontSize: { xs: "1.2rem", md: "24px" },
+                  fontFamily: "Zen Loop",
+                  paddingLeft: "15px",
+                },
+              },
+            }}
           />
-        </div>
+        </Box>
 
         <Button
           type="submit"
@@ -69,7 +176,7 @@ export default function Login() {
           sx={{
             backgroundColor: "#829B97",
             textTransform: "none",
-            Height: "103px",
+            height: "103px",
             width: "265px",
             fontFamily: "Zen Loop",
             fontSize: "48px",
@@ -86,7 +193,23 @@ export default function Login() {
         >
           Login
         </Button>
-      </form>
-    </div>
+
+        <Button
+          variant="text"
+          onClick={() => navigate("/signup")}
+          sx={{
+            color: "white",
+            fontFamily: "Zen Loop",
+            fontSize: "18px",
+            mt: 2,
+            "&:hover": {
+              backgroundColor: "rgba(255, 255, 255, 0.1)",
+            },
+          }}
+        >
+          Har du ikke en bruger? Opret en her
+        </Button>
+      </Box>
+    </Box>
   );
 }
