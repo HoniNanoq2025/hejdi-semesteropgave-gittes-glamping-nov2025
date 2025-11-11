@@ -33,7 +33,7 @@ export default function UserForm({
       setName(user.name || "");
       setEmail(user.email || "");
       setRole(user.role || "guest");
-      setPassword(""); // Always clear password
+      setPassword(""); // Altid ryd password !!
     } else if (mode === "create") {
       clearForm();
     }
@@ -59,7 +59,7 @@ export default function UserForm({
       formData.append("email", email);
       formData.append("role", role);
 
-      // Only include password if it's provided
+      // Inkludér kun password hvis det er tilføjet
       if (password) {
         formData.append("password", password);
       }
@@ -71,9 +71,9 @@ export default function UserForm({
       let result;
 
       if (mode === "create") {
-        result = await createUser(formData, token);
+        result = await createUser(formData, token); // fra fetch.js
       } else {
-        result = await updateUser(formData, token, user._id);
+        result = await updateUser(formData, token, user._id); // fra fetch.js
       }
 
       if (result.message && result.message.includes("successfully")) {
