@@ -7,7 +7,6 @@ import Activities from "./pages/Activities/Activities";
 import Contact from "./pages/Contact/Contact";
 import Stays from "./pages/Stays/Stays";
 import StayDetails from "./pages/StayDetails/StayDetails";
-import ActivityDetails from "./pages/ActivityDetails/ActivityDetails";
 import MyList from "./pages/MyList/MyList";
 import Backoffice from "./pages/BackOffice/Backoffice";
 import Login from "./components/Login/Login";
@@ -34,7 +33,6 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/activities" element={<Activities />} />
-          <Route path="/activity/:id" element={<ActivityDetails />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/stays" element={<Stays />} />
           <Route path="/stay/:id" element={<StayDetails />} />
