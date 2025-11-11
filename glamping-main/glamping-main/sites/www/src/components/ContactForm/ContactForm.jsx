@@ -3,17 +3,25 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { createContact } from "../../api/fetch";
 import { toast } from "react-toastify";
-import styles from "./ContactForm.module.css";
+import {
+  Box,
+  TextField,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Button,
+  FormHelperText,
+} from "@mui/material";
 
 export default function ContactForm() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  // State til de forskellige inputs
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm({
     defaultValues: {
       name: "",
@@ -27,14 +35,12 @@ export default function ContactForm() {
     setLoading(true);
 
     try {
-      // Opret FormData objekt
       const formDataToSend = new FormData();
       formDataToSend.append("name", data.name);
       formDataToSend.append("email", data.email);
       formDataToSend.append("subject", data.subject);
       formDataToSend.append("message", data.message);
 
-      // Send data til backend
       const result = await createContact(formDataToSend);
 
       if (result.status === "ok") {
@@ -60,12 +66,142 @@ export default function ContactForm() {
     }
   };
 
+  // Fælles styling for alle inputs
+  const inputStyles = {
+    "& .MuiOutlinedInput-root": {
+      color: "white",
+      fontFamily: "Zen Loop, sans-serif",
+      fontSize: { xs: "1.2rem", md: "24px" },
+      backgroundColor: "transparent",
+      "& fieldset": {
+        borderColor: "white",
+        borderRadius: "50px",
+      },
+      "&:hover fieldset": {
+        borderColor: "white",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "#c5b496",
+        boxShadow: "0 0 10px rgba(197, 180, 150, 0.5)",
+      },
+      "& input": {
+        paddingLeft: "15px",
+      },
+    },
+    "& .MuiInputLabel-root": {
+      color: "white",
+      fontFamily: "Zen Loop, sans-serif",
+      fontSize: { xs: "24px", md: "24px" },
+      fontWeight: 400,
+      "&.Mui-focused": {
+        color: "white",
+      },
+    },
+    "& .MuiOutlinedInput-input::placeholder": {
+      color: "rgba(255, 255, 255, 0.5)",
+      opacity: 1,
+    },
+  };
+
+  const textareaStyles = {
+    ...inputStyles,
+    "& .MuiOutlinedInput-root": {
+      ...inputStyles["& .MuiOutlinedInput-root"],
+      "& fieldset": {
+        borderColor: "white",
+        borderRadius: "25px",
+      },
+    },
+  };
+
+  const selectStyles = {
+    "& .MuiOutlinedInput-root": {
+      color: "white",
+      fontFamily: "Zen Loop, sans-serif",
+      fontSize: { xs: "1.2rem", md: "24px" },
+      backgroundColor: "transparent",
+      borderRadius: "50px",
+      "& fieldset": {
+        borderColor: "white",
+        borderRadius: "50px",
+      },
+      "&:hover fieldset": {
+        borderColor: "white",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "#c5b496",
+        boxShadow: "0 0 10px rgba(197, 180, 150, 0.5)",
+      },
+      "& .MuiSelect-select": {
+        borderRadius: "50px",
+        paddingLeft: "15px",
+        paddingY: "10px",
+        display: "flex",
+        alignItems: "center",
+      },
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderRadius: "50px",
+      borderColor: "white",
+    },
+    "&:hover .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#c5b496", // gylden hover
+      boxShadow: "0 0 6px rgba(197, 180, 150, 0.4)",
+    },
+
+    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#c5b496",
+      boxShadow: "0 0 10px rgba(197, 180, 150, 0.5)",
+    },
+    "& .MuiSelect-icon": {
+      color: "white",
+    },
+  };
+
   return (
-    <div className="styles.container">
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-        <div className={styles.formGroup}>
-          <label htmlFor="name">Navn</label>
-          <input
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        width: { xs: "330px", md: "600px" },
+        margin: "0 auto",
+        padding: "1rem",
+        backgroundColor: "transparent",
+      }}
+    >
+      <Box
+        component="form"
+        onSubmit={handleSubmit(onSubmit)}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "1.5rem",
+          width: "100%",
+        }}
+      >
+        {/* Navn */}
+        <FormControl fullWidth error={!!errors.name}>
+          <InputLabel
+            htmlFor="name"
+            shrink
+            sx={{
+              position: "relative",
+              transform: "none",
+              marginBottom: "0.5rem",
+              textAlign: "center",
+              width: "100%",
+              color: "white",
+              fontFamily: "Zen Loop, sans-serif",
+              fontSize: "24px",
+              fontWeight: 400,
+            }}
+          >
+            Navn
+          </InputLabel>
+          <TextField
             id="name"
             type="text"
             placeholder="Dit navn..."
@@ -76,18 +212,39 @@ export default function ContactForm() {
                 message: "Navn skal være mindst 2 tegn",
               },
             })}
-            className={`${styles.input} ${
-              errors.name ? styles.inputError : ""
-            }`}
-            aria-invalid={errors.name ? "true" : "false"}
+            error={!!errors.name}
+            helperText={errors.name?.message}
+            sx={{
+              ...inputStyles,
+              "& .MuiFormHelperText-root": {
+                color: "#ff6b6b",
+                fontFamily: "Zen Loop, sans-serif",
+                textAlign: "center",
+              },
+            }}
           />
-          {errors.name && (
-            <span className={styles.error}>{errors.name.message}</span>
-          )}
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="email">Email</label>
-          <input
+        </FormControl>
+
+        {/* Email */}
+        <FormControl fullWidth error={!!errors.email}>
+          <InputLabel
+            htmlFor="email"
+            shrink
+            sx={{
+              position: "relative",
+              transform: "none",
+              marginBottom: "0.5rem",
+              textAlign: "center",
+              width: "100%",
+              color: "white",
+              fontFamily: "Zen Loop, sans-serif",
+              fontSize: "24px",
+              fontWeight: 400,
+            }}
+          >
+            Email
+          </InputLabel>
+          <TextField
             id="email"
             type="email"
             placeholder="Din email adresse..."
@@ -98,40 +255,122 @@ export default function ContactForm() {
                 message: "Ugyldig email adresse",
               },
             })}
-            className={`${styles.input} ${
-              errors.email ? styles.inputError : ""
-            }`}
-            aria-invalid={errors.email ? "true" : "false"}
+            error={!!errors.email}
+            helperText={errors.email?.message}
+            sx={{
+              ...inputStyles,
+              "& .MuiFormHelperText-root": {
+                color: "#ff6b6b",
+                fontFamily: "Zen Loop, sans-serif",
+                textAlign: "center",
+              },
+            }}
           />
-          {errors.email && (
-            <span className={styles.error}>{errors.email.message}</span>
-          )}
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="subject">Hvad drejer henvendelsen sig om?</label>
-          <select
+        </FormControl>
+
+        {/* Subject */}
+        <FormControl fullWidth error={!!errors.subject}>
+          <InputLabel
+            htmlFor="subject"
+            shrink
+            sx={{
+              position: "relative",
+              transform: "none",
+              marginBottom: "0.5rem",
+              textAlign: "center",
+              width: "100%",
+              color: "white",
+              fontFamily: "Zen Loop, sans-serif",
+              fontSize: "24px",
+              fontWeight: 400,
+              color: "white",
+              "&.Mui-focused": {
+                color: "white",
+              },
+            }}
+          >
+            Hvad drejer henvendelsen sig om?
+          </InputLabel>
+          <Select
             id="subject"
             {...register("subject", {
               required: "Vælg venligst et emne",
             })}
-            className={`${styles.input} ${
-              errors.subject ? styles.inputError : ""
-            }`}
-            aria-invalid={errors.subject ? "true" : "false"}
+            defaultValue="booking"
+            sx={selectStyles}
+            renderValue={(selected) => {
+              return (
+                <span
+                  style={{
+                    color: "rgba(255, 255, 255, 0.7)",
+                    fontFamily: "Zen Loop",
+                    fontSize: 24,
+                  }}
+                >
+                  {selected === "booking" ? "Booking" : "Spørgsmål"}
+                </span>
+              );
+            }}
+            MenuProps={{
+              PaperProps: {
+                sx: {
+                  backgroundColor: "#c5b496",
+                  "& .MuiMenuItem-root": {
+                    color: "white",
+                    fontFamily: "Zen Loop, sans-serif",
+                    fontSize: "16px",
+                    "&:hover": {
+                      backgroundColor: "rgba(255, 255, 255, 0.1)",
+                    },
+                    "&.Mui-selected": {
+                      backgroundColor: "rgba(255, 255, 255, 0.2)",
+                      "&:hover": {
+                        backgroundColor: "rgba(255, 255, 255, 0.3)",
+                      },
+                    },
+                  },
+                },
+              },
+            }}
           >
-            <option value="booking">Booking</option>
-            <option value="question">Spørgsmål</option>
-          </select>
+            <MenuItem value="booking">Booking</MenuItem>
+            <MenuItem value="question">Spørgsmål</MenuItem>
+          </Select>
           {errors.subject && (
-            <span className={styles.error}>{errors.subject.message}</span>
+            <FormHelperText
+              sx={{
+                color: "#ff6b6b",
+                fontFamily: "Zen Loop, sans-serif",
+                textAlign: "center",
+              }}
+            >
+              {errors.subject.message}
+            </FormHelperText>
           )}
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="message">
-            Besked (Skriv dato’er, hvis det drejer sig om en booking)
-          </label>
-          <textarea
+        </FormControl>
+
+        {/* Message */}
+        <FormControl fullWidth error={!!errors.message}>
+          <InputLabel
+            htmlFor="message"
+            shrink
+            sx={{
+              position: "relative",
+              transform: "none",
+              marginBottom: "0.5rem",
+              textAlign: "center",
+              width: "100%",
+              color: "white",
+              fontFamily: "Zen Loop, sans-serif",
+              fontSize: "24px",
+              fontWeight: 400,
+            }}
+          >
+            Besked (Skriv dato'er, hvis det drejer sig om en booking)
+          </InputLabel>
+          <TextField
             id="message"
+            multiline
             rows={8}
             {...register("message", {
               required: "Besked er påkrævet",
@@ -140,20 +379,55 @@ export default function ContactForm() {
                 message: "Beskeden skal være mindst 10 tegn",
               },
             })}
-            className={`${styles.input} ${
-              errors.subject ? styles.inputError : ""
-            }`}
-            aria-invalid={errors.subject ? "true" : "false"}
+            error={!!errors.message}
+            helperText={errors.message?.message}
+            sx={{
+              ...textareaStyles,
+              "& .MuiFormHelperText-root": {
+                color: "#ff6b6b",
+                fontFamily: "Zen Loop, sans-serif",
+                textAlign: "center",
+              },
+            }}
           />
-          {errors.message && (
-            <span className={styles.error}>{errors.message.message}</span>
-          )}
-        </div>
+        </FormControl>
 
-        <button type="submit" disabled={loading} className={styles.submitBtn}>
+        {/* Submit Button */}
+        <Button
+          type="submit"
+          disabled={loading}
+          sx={{
+            height: "103px",
+            width: "265px",
+            backgroundColor: "#829b97",
+            color: "white",
+            border: "none",
+            borderTopLeftRadius: "50px",
+            borderBottomRightRadius: "50px",
+            fontFamily: "Zen Loop, cursive",
+            fontSize: "48px",
+            cursor: "pointer",
+            transition: "all 0.3s",
+            marginTop: "20px",
+            textTransform: "none",
+            "&:hover:not(:disabled)": {
+              backgroundColor: "#2a4f57",
+              border: "1px solid white",
+              transform: "scale(1.02)",
+            },
+            "&:disabled": {
+              opacity: 0.5,
+              cursor: "not-allowed",
+              color: "white",
+            },
+            "&:active:not(:disabled)": {
+              transform: "scale(0.98)",
+            },
+          }}
+        >
           {loading ? "Sender..." : "Indsend"}
-        </button>
-      </form>
-    </div>
+        </Button>
+      </Box>
+    </Box>
   );
 }
