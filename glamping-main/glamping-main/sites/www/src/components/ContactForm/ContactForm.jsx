@@ -279,7 +279,6 @@ export default function ContactForm() {
               marginBottom: "0.5rem",
               textAlign: "center",
               width: "100%",
-              color: "white",
               fontFamily: "Zen Loop, sans-serif",
               fontSize: "24px",
               fontWeight: 400,
