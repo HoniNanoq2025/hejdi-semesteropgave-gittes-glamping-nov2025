@@ -2,41 +2,48 @@ import dbConnect from "../db/dbConnect.js";
 import myListModel from "../db/models/myList.model.mjs";
 
 export const saveList = async (body) => {
+  let result = { status: "error", message: "An Error Occurred", data: [] };
 
-    let result = {status: 'error', message: "An Error Occurred", data: []};
+  try {
+    await dbConnect();
 
-    try {
+    let data = null;
+    // Fix: Search by email instead of name
+    let exists = await myListModel.findOne({ email: body.email });
 
-        await dbConnect();
-
-        let data = null;
-        let exists = await myListModel.findOne({name: body.name});
-
-        if(body.activityIds !== undefined){
-
-            body.activityIds = body.activityIds.split(',');
-        
-        }
-
-        if(exists){
-
-            return await myListModel.findOneAndUpdate({_id : id}, body, {new: true});
-
-        } else {
-            
-            data = await myListModel.create(body);
-        }
-
-
-
-        result = {status: 'ok', message: "Review created successfully", data: data}
-
-    } catch (error) {   
-
-        console.log(error)
-
+    if (body.activityIds !== undefined) {
+      // Only split if it's a string
+      if (typeof body.activityIds === "string") {
+        body.activityIds = body.activityIds.split(",").map((id) => id.trim());
+      }
     }
 
-    return result
+    if (exists) {
+      // Fix: Use exists._id instead of undefined 'id'
+      data = await myListModel.findOneAndUpdate({ _id: exists._id }, body, {
+        new: true,
+      });
+      result = {
+        status: "ok",
+        message: "List updated successfully",
+        data: data,
+      };
+    } else {
+      data = await myListModel.create(body);
+      result = {
+        status: "ok",
+        message: "List created successfully",
+        data: data,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    result = {
+      status: "error",
+      message: error.message || "An Error Occurred",
+      data: [],
+    };
+  }
 
-}
+  return result;
+};
