@@ -17,7 +17,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await signIn(email, password);
+      const data = await signIn(email, password); // hent fra fetch.js
 
       toast.success("Login succesfuld");
       setToken(data.data.token);
