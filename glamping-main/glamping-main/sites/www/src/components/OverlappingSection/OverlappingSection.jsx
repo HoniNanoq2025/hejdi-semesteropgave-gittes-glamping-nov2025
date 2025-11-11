@@ -16,8 +16,8 @@ export default function OverlappingSection({
         backgroundColor: "#33626C",
         color: "white",
         mt: isHome // mt = margin-top
-          ? { xs: -8, md: -10 } // overlap på Home
-          : { xs: -14, md: -16 }, // Overlap med Hero
+          ? { xs: -6, md: -8 } // overlap på Home
+          : { xs: -12, md: -14 }, // Overlap med Hero
         borderTopLeftRadius: "50px",
         borderBottomRightRadius: "50px",
         px: { xs: 2, sm: 4 }, //px: 2 = padding-left + padding-right: 16px / 32px

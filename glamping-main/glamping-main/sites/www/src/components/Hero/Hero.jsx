@@ -23,7 +23,8 @@ export default function Hero({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        pb: isHome ? { xs: 6, md: 8 } : { xs: 12, md: 14 },
+        pt: isHome ? { xs: 8, md: 10 } : { xs: 10, md: 12 },
+        pb: isHome ? { xs: 12, md: 14 } : { xs: 12, md: 14 },
       }}
     >
       {/* Overlay til Home */}
@@ -68,7 +69,7 @@ export default function Hero({
             src={props.logo}
             alt="Logo"
             sx={{
-              width: { xs: 72, sm: 112, md: 152 },
+              width: { xs: 72, sm: 82, md: 92 },
               filter: "brightness(0) invert(1)",
               mb: { xs: 2, md: 3 }, // margin-bottom: 16px på mobile / 24 px på desktop
             }}
@@ -80,8 +81,8 @@ export default function Hero({
           sx={{
             fontFamily: "Zen Loop",
             fontSize: isHome
-              ? { xs: "64px", sm: "80px", md: "96px" } // Home ("Gittes")
-              : { xs: "96px", sm: "120px", md: "144px" }, // Undersider + Home: Glamping
+              ? { xs: "64px", sm: "70px", md: "86px" } // Home ("Gittes")
+              : { xs: "96px", sm: "100px", md: "120px" }, // Undersider + Home: Glamping
             fontWeight: isHome ? 700 : 400,
             lineHeight: 1,
             mb: isHome ? { xs: "-20px", sm: "-25px", md: "-30px" } : 0, // Ternary operator: Hvis isHome, så sæt margin-bottom på mobil, tablet og desktop, ellers er den 0,
@@ -96,7 +97,7 @@ export default function Hero({
             component={"h1"}
             sx={{
               fontFamily: "Zen Loop",
-              fontSize: { xs: "96px", sm: "120px", md: "144px" },
+              fontSize: { xs: "96px", sm: "100px", md: "120px" },
               fontWeight: 700,
               lineHeight: 1,
               mb: { xs: 6, md: 8 }, // margin-bottom mobil: 48px, desktop: 64px
