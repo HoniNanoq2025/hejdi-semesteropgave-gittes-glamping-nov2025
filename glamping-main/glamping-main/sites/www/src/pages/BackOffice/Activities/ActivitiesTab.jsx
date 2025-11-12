@@ -78,7 +78,7 @@ export default function ActivitiesTab() {
 
   // Vis "loading..." tekst, mens data hentes
   if (loading) {
-    return <Typography>Loading activities...</Typography>;
+    return <Typography>Henter aktiviteter...</Typography>;
   }
 
   return (
@@ -94,7 +94,7 @@ export default function ActivitiesTab() {
           color: "black",
         }}
       >
-        Activities Management
+        Aktivitetshåndtering
       </Typography>
       {/* Fejlbesked hvis hentning fejler */}
       {error && (
