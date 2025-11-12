@@ -24,6 +24,7 @@ export default function Backoffice() {
       <Tabs
         value={tabIndex} // Viser hvilken tab der er aktiv
         onChange={(e, newIndex) => setTabIndex(newIndex)} // Opdaterer valgt tab
+        /* newIndex fortæller os, hvilken tab der blev valgt, og gør det muligt at vise det korrekte indhold dynamisk.  */
         textColor="primary"
         indicatorColor="primary"
         variant="scrollable" // Tabs kan scrolles hvis der er mange
