@@ -4,31 +4,37 @@ import { createActivity, updateActivity } from "../../../api/fetch";
 import { toast } from "react-toastify";
 
 export default function ActivityForm({
-  mode,
-  activity,
-  onSave,
-  disabled,
-  onCancel,
-  onSuccess,
+  mode, // "create" eller "update"
+  activity, // Aktivitet til opdatering
+  onSave, // Callback når aktivitet er gemt
+  disabled, // Om formularen skal være låst
+  onCancel, // Callback ved aflysning
+  onSuccess, // Callback ved succes
 }) {
+  // State til formularfelter
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [image, setImage] = useState(null);
+
+  // Loader-status
   const [loading, setLoading] = useState(false);
 
+  // useEffect kører når mode eller activity ændres
   useEffect(() => {
     if (mode === "update" && activity) {
+      // Hvis vi opdaterer, fyld formularen med eksisterende data
       setTitle(activity.title || "");
       setDescription(activity.description || "");
       setDate(activity.date || "");
       setTime(activity.time || "");
     } else if (mode === "create") {
-      clearForm();
+      clearForm(); // Ryd formularen hvis vi opretter ny aktivitet
     }
   }, [mode, activity]);
 
+  // Funktion til at rydde formularfelter
   const clearForm = () => {
     setTitle("");
     setDescription("");
@@ -37,54 +43,58 @@ export default function ActivityForm({
     setImage(null);
   };
 
+  // Funktion til at håndtere form submit
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+    e.preventDefault(); // Stopper standard form submit
+    setLoading(true); // Sætter loading state
 
     try {
-      const token = localStorage.getItem("token");
-      const formData = new FormData();
+      const token = localStorage.getItem("token"); // Hent token fra localStorage
+      const formData = new FormData(); // Opret FormData til filupload
 
+      // Tilføj felter til FormData
       formData.append("title", title);
       formData.append("description", description);
       formData.append("date", date);
       formData.append("time", time);
 
       if (image) {
-        formData.append("file", image);
+        formData.append("file", image); // Tilføj billedfil hvis valgt
       }
 
       let result;
       if (mode === "create") {
-        result = await createActivity(formData, token);
+        result = await createActivity(formData, token); // Opret ny aktivitet
       } else {
-        formData.append("id", activity._id);
-        result = await updateActivity(formData, token);
+        formData.append("id", activity._id); // Tilføj id til opdatering
+        result = await updateActivity(formData, token); // Opdater eksisterende aktivitet
       }
 
+      // Håndter respons fra API
       if (result.status === "ok") {
         toast.success(
           result.message ||
             `Activity ${mode === "create" ? "created" : "updated"} successfully`
         );
-        onSave(result.data);
+        onSave(result.data); // Kald callback med gemt data
         if (mode === "create") {
-          clearForm();
+          clearForm(); // Ryd formular hvis ny aktivitet
         }
         if (onSuccess) {
-          onSuccess();
+          onSuccess(); // Kald succes-callback
         }
       } else {
-        toast.error(result.message || "Operation failed");
+        toast.error(result.message || "Operation failed"); // Fejl notifikation
       }
-    } catch (error) {
-      console.error("Error saving activity:", error);
-      toast.error("Failed to save activity");
+    } catch (err) {
+      console.error("Error saving activity:", err); // Log fejl
+      toast.error("Failed to save activity"); // Vis fejl notifikation
     } finally {
-      setLoading(false);
+      setLoading(false); // Stop loader
     }
   };
 
+  // Disable knapper hvis loading eller disabled i create-mode
   const isDisabled = (mode === "create" && disabled) || loading;
 
   return (
@@ -106,6 +116,7 @@ export default function ActivityForm({
         },
       }}
     >
+      {/* Header baseret på form mode */}
       <Typography
         variant="h6"
         sx={{
@@ -117,6 +128,7 @@ export default function ActivityForm({
         {mode === "create" ? "Add New Activity" : "Update Activity"}
       </Typography>
 
+      {/* Formularfelter */}
       <TextField
         label="Title"
         fullWidth
@@ -154,6 +166,7 @@ export default function ActivityForm({
         disabled={isDisabled}
         required
       />
+      {/* Upload billede */}
       <Button
         variant="outlined"
         component="label"
@@ -175,6 +188,7 @@ export default function ActivityForm({
         </Typography>
       )}
 
+      {/* Submit og cancel knapper */}
       <Box sx={{ display: "flex", gap: 1, mt: 3 }}>
         <Button
           type="submit"
