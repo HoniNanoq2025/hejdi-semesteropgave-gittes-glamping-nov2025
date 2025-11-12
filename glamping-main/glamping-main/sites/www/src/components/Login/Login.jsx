@@ -7,22 +7,27 @@ import { toast } from "react-toastify";
 import { Button, TextField, Box, Typography } from "@mui/material";
 
 export default function Login() {
+  // State til email og password inputfelter
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // Hooks til at gemme data i localStorage
   const [, setToken] = useLocalStorage("token", null);
   const [, setUserEmail] = useLocalStorage("userEmail", null);
   const [, setUserName] = useLocalStorage("userName", null);
-  const navigate = useNavigate();
 
+  const navigate = useNavigate(); // til navigation mellem sider
+
+  // Funktion der kører når man trykker "Login"
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Stopper side-refresh (standard form-opførsel)
     try {
-      const data = await signIn(email, password); // hent fra fetch.js
+      const data = await signIn(email, password); // // Kalder API’et for at logge ind (fra fetch.js)
 
       toast.success("Login succesfuld");
-      setToken(data.data.token);
+      setToken(data.data.token); // Gemmer token i localStorage
 
-      // Decode JWT token for at få brugerdata
+      // Dekoder token for at få brugerinfo
       const user = jwtDecode(data.data.token);
 
       // Gem brugerdata i localStorage
@@ -34,12 +39,14 @@ export default function Login() {
       else navigate("/mylist");
     } catch (err) {
       console.error(err);
-      toast.error(err.message || "Noget gik galt ved login");
+      toast.error("Noget gik galt ved login");
     }
   };
 
   return (
+    // Yderste container der centrerer indhold
     <Box
+      className="login-container"
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -50,8 +57,10 @@ export default function Login() {
         height: "100dvh",
       }}
     >
+      {/* Login-formular */}
       <Box
         component="form"
+        className="login-form"
         onSubmit={handleSubmit}
         sx={{
           display: "flex",
@@ -60,7 +69,9 @@ export default function Login() {
           gap: 1.5,
         }}
       >
+        {/* E-mail felt */}
         <Box
+          className="email-input-container"
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -71,6 +82,7 @@ export default function Login() {
         >
           <Typography
             component="label"
+            className="email-label"
             htmlFor="email"
             sx={{
               textAlign: "center",
@@ -82,7 +94,10 @@ export default function Login() {
           >
             Email
           </Typography>
+
+          {/* Email inputfelt */}
           <TextField
+            className="email-input"
             id="email"
             type="email"
             value={email}
@@ -90,20 +105,25 @@ export default function Login() {
             required
             sx={{
               width: { xs: "330px", md: "600px" },
+              //styler selve input-boksen
               "& .MuiOutlinedInput-root": {
                 height: { xs: "35px", md: "45px" },
                 borderRadius: "50px",
                 backgroundColor: "transparent",
+                // border-styling
                 "& fieldset": {
                   borderColor: "white",
                 },
+                // hover på border er gylden
                 "&:hover fieldset": {
-                  borderColor: "white",
+                  borderColor: "#c5b496",
                 },
+                // Gylden glow når man har klikket på felt
                 "&.Mui-focused fieldset": {
                   borderColor: "#c5b496",
                   boxShadow: "0 0 10px rgba(197, 180, 150, 0.5)",
                 },
+                // Input tekt-styling
                 "& input": {
                   color: "white",
                   fontSize: { xs: "1.2rem", md: "24px" },
@@ -115,7 +135,9 @@ export default function Login() {
           />
         </Box>
 
+        {/* Password felt */}
         <Box
+          className="password-input-container"
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -126,6 +148,7 @@ export default function Login() {
         >
           <Typography
             component="label"
+            className="password-label"
             htmlFor="password"
             sx={{
               textAlign: "center",
@@ -137,28 +160,36 @@ export default function Login() {
           >
             Password
           </Typography>
+
+          {/* Password inputfelt */}
           <TextField
             id="password"
+            className="password-input"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
             sx={{
               width: { xs: "330px", md: "600px" },
+              //styler selve input-boksen
               "& .MuiOutlinedInput-root": {
                 height: { xs: "35px", md: "45px" },
                 borderRadius: "50px",
                 backgroundColor: "transparent",
+                // border-styling
                 "& fieldset": {
                   borderColor: "white",
                 },
+                // hover på border er gylden
                 "&:hover fieldset": {
-                  borderColor: "white",
+                  borderColor: "#c5b496",
                 },
+                // Gylden glow når man har klikket på felt
                 "&.Mui-focused fieldset": {
                   borderColor: "#c5b496",
                   boxShadow: "0 0 10px rgba(197, 180, 150, 0.5)",
                 },
+                // Input tekt-styling
                 "& input": {
                   color: "white",
                   fontSize: { xs: "1.2rem", md: "24px" },
@@ -170,9 +201,11 @@ export default function Login() {
           />
         </Box>
 
+        {/* LOGIN knap */}
         <Button
           type="submit"
           variant="contained"
+          className="login-button"
           sx={{
             backgroundColor: "#829B97",
             textTransform: "none",
@@ -185,9 +218,9 @@ export default function Login() {
             borderBottomRightRadius: "50px",
             mt: 6,
             "&:hover": {
-              backgroundColor: "#2A4F57",
+              backgroundColor: "#2A4F57", // Mørkere farve ved hover
               color: "white",
-              border: "1px solid white",
+              border: "1px solid white", // Tilføjer hvid kant
             },
           }}
         >
@@ -196,6 +229,7 @@ export default function Login() {
 
         <Button
           variant="text"
+          className="create-user-button"
           onClick={() => navigate("/signup")}
           sx={{
             color: "white",
