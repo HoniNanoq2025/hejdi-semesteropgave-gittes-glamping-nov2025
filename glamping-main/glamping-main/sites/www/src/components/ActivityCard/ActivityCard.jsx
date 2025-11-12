@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion } from "framer-motion"; // Til animationer (fx hover-effekter)
+import { useState } from "react"; // React hook til at håndtere komponentens tilstand
 import {
   Card,
   CardMedia,
@@ -10,28 +10,36 @@ import {
   AccordionDetails,
   IconButton,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import { useLocalStorage } from "@uidotdev/usehooks";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore"; // Pil-ikon til accordion
+import FavoriteIcon from "@mui/icons-material/Favorite"; // Hjerte-ikon
+import { useLocalStorage } from "@uidotdev/usehooks"; // Hook til at gemme data i browserens localStorage
 
+// Komponent der viser én aktivitet i et Card
 export default function ActivityCard({ activity }) {
+  // Gemmer favoritlisten i localStorage, så den bliver husket efter genindlæsning
   const [favorites, setFavorites] = useLocalStorage("favorites", []);
+
+  // Styrer om "Læs Mere"-sektionen (accordion) er åben
   const [expanded, setExpanded] = useState(false);
 
+  // Tjek om denne aktivitet allerede er blandt favoritter
   const favorite = favorites.includes(activity._id);
 
-  // Toggle favorit
+  // Funktion til at tilføje eller fjerne aktivitet som favorit
   const toggleFavorite = () => {
     let updated;
     if (favorite) {
+      // Fjern fra favoritter
       updated = favorites.filter((id) => id !== activity._id);
     } else {
+      // Tilføj til favoritter
       updated = [...favorites, activity._id];
     }
-    setFavorites(updated);
+    setFavorites(updated); // Opdater gemte favoritter
   };
 
   return (
+    // motion.div tilføjer en let hover-animation (fra framer-motion)
     <motion.div whileHover={{ scale: 1.02, y: -5 }}>
       <Card
         sx={{
@@ -43,10 +51,10 @@ export default function ActivityCard({ activity }) {
           backgroundColor: "#CED3CD",
           border: "none",
           boxShadow: "none",
-          overflow: "visible", //Vigtig til overlapping effekt
+          overflow: "visible", // Tillader elementer at overlappe kortets kanter
         }}
       >
-        {/* Header Box - overlapper billede */}
+        {/* Header-boks med aktivitetens titel - overlapper billedet */}
         <Box
           sx={{
             position: "relative",
@@ -55,14 +63,15 @@ export default function ActivityCard({ activity }) {
             backgroundColor: "#C5B496",
             borderTopLeftRadius: "50px",
             borderBottomRightRadius: "50px",
-            py: 2, // py: 2 = padding-top + padding-bottom: 16px
-            px: 3, //px: 3 = padding-left + padding-right: 24px
+            py: 2, // py: 2 = padding-top + padding-bottom: 16px (Lodret padding)
+            px: 3, //px: 3 = padding-left + padding-right: 24px (Vandret padding)
             textAlign: "center",
-            zIndex: 3,
-            mb: "-50px",
+            zIndex: 3, // Ligger foran billedet
+            mb: "-50px", // Trækker boksen ned over billedets top
             maxWidth: "320px",
           }}
         >
+          {/* Activity Title */}
           <Typography
             variant="h2"
             sx={{
@@ -76,7 +85,7 @@ export default function ActivityCard({ activity }) {
           </Typography>
         </Box>
 
-        {/* Billede */}
+        {/* Billede af aktiviteten */}
         <CardMedia
           component="img"
           width="390px"
@@ -85,7 +94,7 @@ export default function ActivityCard({ activity }) {
           alt={activity.title}
           sx={{
             position: "relative",
-            zIndex: 2,
+            zIndex: 2, // Billedet ligger under header og infoboks
           }}
         />
 
@@ -99,12 +108,12 @@ export default function ActivityCard({ activity }) {
             pt: 3,
             pb: 3,
             px: 3,
-            marginTop: "-40px",
+            marginTop: "-40px", // Overlapper billedets bund
             maxWidth: "320px",
             zIndex: 3,
           }}
         >
-          {/* Box med Favorite Icon og Tid Info */}
+          {/* Topsektion i boksen med dato/tid og favoritknap */}
           <Box
             sx={{
               display: "flex",
@@ -113,7 +122,7 @@ export default function ActivityCard({ activity }) {
               mb: 2, // Margin-bottom: 16px
             }}
           >
-            {/* Tid info */}
+            {/* Dato og tid */}
             <Typography
               sx={{
                 color: "white",
@@ -127,7 +136,7 @@ export default function ActivityCard({ activity }) {
               {activity.time}
             </Typography>
 
-            {/* Favorite Icon */}
+            {/* Hjerte-ikon til at gemme som favorit */}
             <IconButton
               onClick={toggleFavorite} // Toggle mellem favorit/ikke-favorit
               sx={{
@@ -143,11 +152,11 @@ export default function ActivityCard({ activity }) {
                 transition: "color 0.3s ease, background-color 0.3s ease", // Gør det glidende
               }}
             >
-              <FavoriteIcon />
+              <FavoriteIcon /> {/* Selve hjerte-ikonet */}
             </IconButton>
           </Box>
 
-          {/* Accordion */}
+          {/* Accordion - viser beskrivelse når man klikker "Læs Mere" */}
           <Accordion
             expanded={expanded} // Styrer om accordion er åben eller lukket
             onChange={() => setExpanded(!expanded)} // Toggle accordion åben/lukket
@@ -157,6 +166,7 @@ export default function ActivityCard({ activity }) {
               "&:before": { display: "none" }, // Fjerner MUI's default border-linje over accordion
             }}
           >
+            {/* Headeren man klikker på for at åbne/lukke */}
             <AccordionSummary
               expandIcon={
                 <ExpandMoreIcon sx={{ color: "white", fontSize: "40px" }} /> // Pil-ikon der roterer ved åbning
@@ -172,6 +182,7 @@ export default function ActivityCard({ activity }) {
                 justifyContent: "center", // Centrerer indhold horisontalt
                 // Styling når accordion er åben (expanded)
                 "&.Mui-expanded": {
+                  // Bevar radius, selv når den åbnes
                   minHeight: "56px",
                   borderBottomLeftRadius: expanded ? 0 : 0, // Fjerner nederste venstre radius når åben
                   borderBottomRightRadius: expanded ? "50px" : "50px", // Beholder nederste højre radius
@@ -201,11 +212,12 @@ export default function ActivityCard({ activity }) {
                 Læs Mere
               </Typography>
             </AccordionSummary>
+
+            {/* Indholdet der foldes ud (beskrivelsen) */}
             <AccordionDetails
               sx={{
                 border: "none",
                 borderTop: "none",
-                borderBottomLeftRadius: 0,
                 borderBottomRightRadius: "50px",
                 color: "white",
                 pt: 2,
