@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Tabs, Tab, Link, Typography, Button } from "@mui/material";
+import { Box, Tabs, Tab, Button } from "@mui/material";
 import ActivitiesTab from "./Activities/ActivitiesTab";
 import StaysTab from "./Stays/StaysTab";
 import ReviewsTab from "./Reviews/ReviewsTab";
@@ -8,24 +8,25 @@ import ContactsTab from "./Contacts/ContactsTab";
 import UsersTab from "./Users/UsersTab";
 
 export default function Backoffice() {
-  const [tabIndex, setTabIndex] = useState(0);
-  const navigate = useNavigate();
+  const [tabIndex, setTabIndex] = useState(0); // State til at tracke hvilken tab der er valgt
+  const navigate = useNavigate(); // Hook til at navigere til en anden side
 
   return (
     <Box
+      className="backoffice-container"
       sx={{
         width: "100%",
-        p: { xs: 2, md: 4 },
-        backgroundColor: "#f5f5f5",
-        minHeight: "100vh",
+        p: { xs: 2, md: 4 }, // Padding: mindre på mobil, større på desktop
+        backgroundColor: "#f5f5f5", // Lys baggrund
+        minHeight: "100vh", // Min højde = hele skærmen
       }}
     >
       <Tabs
-        value={tabIndex}
-        onChange={(e, newIndex) => setTabIndex(newIndex)}
+        value={tabIndex} // Viser hvilken tab der er aktiv
+        onChange={(e, newIndex) => setTabIndex(newIndex)} // Opdaterer valgt tab
         textColor="primary"
         indicatorColor="primary"
-        variant="scrollable"
+        variant="scrollable" // Tabs kan scrolles hvis der er mange
         scrollButtons="auto"
         sx={{
           mb: { xs: 2, md: 1 },
@@ -37,6 +38,7 @@ export default function Backoffice() {
           px: { xs: 1, md: 0 }, // lille padding på mobil, fjern på desktop
         }}
       >
+        {/* Tab-knapper */}
         <Tab
           label="Activities"
           sx={{
@@ -78,7 +80,7 @@ export default function Backoffice() {
         />
       </Tabs>
 
-      {/* Link til frontend */}
+      {/* Knap til at gå til frontend */}
       <Box sx={{ mb: 3 }}>
         <Button
           onClick={() => navigate("/")}
@@ -95,6 +97,7 @@ export default function Backoffice() {
         </Button>
       </Box>
 
+      {/* Render indhold afhængig af valgt tab */}
       {tabIndex === 0 && <ActivitiesTab />}
       {tabIndex === 1 && <StaysTab />}
       {tabIndex === 2 && <ReviewsTab />}
