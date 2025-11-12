@@ -31,6 +31,13 @@ const BurgerButton = styled(IconButton)({
   "&:hover": {
     backgroundColor: "#2a4f57",
   },
+  "&:focus": {
+    outline: "none", // Fjern browserens outline
+  },
+  "&.Mui-focusVisible": {
+    outline: "2px solid #ffffff50", // Kun synlig ved keyboard-navigation (a11y)
+    outlineOffset: "4px",
+  },
 });
 
 const StyledNavLink = styled(NavLink)({
@@ -41,7 +48,7 @@ const StyledNavLink = styled(NavLink)({
   fontFamily: '"Zen Loop", sans-serif',
   transition: "color 0.2s ease",
   "&:hover, &.active": {
-    color: "#2a4f57",
+    color: "#010405ff",
     fontSize: "2.5rem",
   },
 });
@@ -139,6 +146,13 @@ export default function Header() {
               top: "1.2rem",
               right: "1.5rem",
               color: "white",
+              "&:focus": {
+                outline: "none", // Fjern browserens outline
+              },
+              "&.Mui-focusVisible": {
+                outline: "2px solid #ffffff50", // Kun synlig ved keyboard-navigation (a11y)
+                outlineOffset: "4px",
+              },
             }}
           >
             <CloseIcon sx={{ fontSize: 28 }} />
