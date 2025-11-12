@@ -60,6 +60,7 @@ export default function ContactsTab() {
         sx={{
           boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
           overflowX: "auto",
+          maxWidth: { xs: "90%", lg: "92%" },
         }}
       >
         <Table sx={{ minWidth: { xs: 300, sm: 650 } }}>
@@ -122,7 +123,7 @@ export default function ContactsTab() {
                       maxWidth: 300,
                       overflow: "hidden",
                       textOverflow: "ellipsis",
-                      whiteSpace: "wrap",
+                      whiteSpace: "normal",
                       fontSize: { xs: "0.875rem", md: "1rem" },
                     }}
                   >

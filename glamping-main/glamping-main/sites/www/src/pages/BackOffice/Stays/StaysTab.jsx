@@ -67,7 +67,7 @@ export default function StaysTab() {
         </Alert>
       )}
 
-      <Box sx={{ mb: { xs: 3, md: 4 }, maxWidth: { lg: "1100px" } }}>
+      <Box sx={{ mb: { xs: 3, md: 4 } }}>
         <StayTable
           stays={stays}
           onSelect={setSelectedStay}
@@ -75,25 +75,32 @@ export default function StaysTab() {
         />
       </Box>
 
-      <Grid container spacing={{ xs: 2, md: 4 }}>
-        <Grid size={{ xs: 12, lg: 6 }}>
-          <StayForm
-            mode="create"
-            onSave={handleSave}
-            disabled={!!selectedStay}
-            onSuccess={loadStays}
-          />
+      <Box
+        sx={{
+          maxWidth: { md: "900px", lg: "1100px", xl: "1400px" }, // begræns bredde på desktop
+          px: { xs: 2, md: 0 }, // lille padding på mobil
+        }}
+      >
+        <Grid container spacing={{ xs: 2, md: 4 }}>
+          <Grid size={{ xs: 12, lg: 6 }}>
+            <StayForm
+              mode="create"
+              onSave={handleSave}
+              disabled={!!selectedStay}
+              onSuccess={loadStays}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, lg: 6 }}>
+            <StayForm
+              mode="update"
+              stay={selectedStay}
+              onSave={handleSave}
+              onCancel={() => setSelectedStay(null)}
+              onSuccess={loadStays}
+            />
+          </Grid>
         </Grid>
-        <Grid size={{ xs: 12, lg: 6 }}>
-          <StayForm
-            mode="update"
-            stay={selectedStay}
-            onSave={handleSave}
-            onCancel={() => setSelectedStay(null)}
-            onSuccess={loadStays}
-          />
-        </Grid>
-      </Grid>
+      </Box>
     </>
   );
 }

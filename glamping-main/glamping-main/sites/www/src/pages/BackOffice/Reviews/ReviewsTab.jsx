@@ -68,7 +68,7 @@ export default function ReviewsTab() {
           {error}
         </Alert>
       )}
-      <Box sx={{ mb: { xs: 3, md: 4 }, maxWidth: { md: "900px" } }}>
+      <Box sx={{ mb: { xs: 3, md: 4 } }}>
         <ReviewTable
           reviews={reviews}
           onSelect={setSelectedReview}
@@ -76,25 +76,32 @@ export default function ReviewsTab() {
         />
       </Box>
 
-      <Grid container spacing={{ xs: 2, md: 4 }}>
-        <Grid size={{ xs: 12, lg: 6 }}>
-          <ReviewForm
-            mode="create"
-            onSave={handleSave}
-            disabled={!!selectedReview}
-            onSuccess={loadReviews}
-          />
+      <Box
+        sx={{
+          maxWidth: { md: "900px", lg: "1100px", xl: "1400px" }, // begræns bredde på desktop
+          px: { xs: 2, md: 0 }, // lille padding på mobil
+        }}
+      >
+        <Grid container spacing={{ xs: 2, md: 4 }}>
+          <Grid size={{ xs: 12, lg: 6 }}>
+            <ReviewForm
+              mode="create"
+              onSave={handleSave}
+              disabled={!!selectedReview}
+              onSuccess={loadReviews}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, lg: 6 }}>
+            <ReviewForm
+              mode="update"
+              review={selectedReview}
+              onSave={handleSave}
+              onCancel={() => setSelectedReview(null)}
+              onSuccess={loadReviews}
+            />
+          </Grid>
         </Grid>
-        <Grid size={{ xs: 12, lg: 6 }}>
-          <ReviewForm
-            mode="update"
-            review={selectedReview}
-            onSave={handleSave}
-            onCancel={() => setSelectedReview(null)}
-            onSuccess={loadReviews}
-          />
-        </Grid>
-      </Grid>
+      </Box>
     </>
   );
 }

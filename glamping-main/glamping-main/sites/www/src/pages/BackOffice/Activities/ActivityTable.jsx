@@ -39,6 +39,7 @@ export default function ActivityTable({ activities, onSelect, onDelete }) {
       sx={{
         boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
         overflowX: "auto",
+        maxWidth: { xs: "90%", md: "95%" },
       }}
     >
       <Table sx={{ minWidth: { xs: 300, sm: 650 } }}>
@@ -53,7 +54,7 @@ export default function ActivityTable({ activities, onSelect, onDelete }) {
               sx={{
                 fontWeight: 600,
                 fontSize: { xs: "0.875rem", md: "1rem" },
-                display: { xs: "none", sm: "table-cell" },
+                display: { xs: "none", md: "table-cell" },
               }}
             >
               Date
@@ -62,7 +63,7 @@ export default function ActivityTable({ activities, onSelect, onDelete }) {
               sx={{
                 fontWeight: 600,
                 fontSize: { xs: "0.875rem", md: "1rem" },
-                display: { xs: "none", sm: "table-cell" },
+                display: { xs: "none", md: "table-cell" },
               }}
             >
               Time
@@ -95,7 +96,7 @@ export default function ActivityTable({ activities, onSelect, onDelete }) {
                 <TableCell
                   sx={{
                     fontSize: { xs: "0.875rem", md: "1rem" },
-                    display: { xs: "none", sm: "table-cell" },
+                    display: { xs: "none", md: "table-cell" },
                   }}
                 >
                   {a.date}
@@ -103,7 +104,7 @@ export default function ActivityTable({ activities, onSelect, onDelete }) {
                 <TableCell
                   sx={{
                     fontSize: { xs: "0.875rem", md: "1rem" },
-                    display: { xs: "none", sm: "table-cell" },
+                    display: { xs: "none", md: "table-cell" },
                   }}
                 >
                   {a.time}

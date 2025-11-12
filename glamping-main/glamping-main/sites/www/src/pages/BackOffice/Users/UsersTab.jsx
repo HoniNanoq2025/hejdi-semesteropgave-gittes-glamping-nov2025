@@ -67,7 +67,7 @@ export default function UsersTab() {
         </Alert>
       )}
 
-      <Box sx={{ mb: { xs: 3, md: 4 }, maxWidth: { md: "900px" } }}>
+      <Box sx={{ mb: { xs: 3, md: 4 } }}>
         <UserTable
           users={users}
           onSelect={setSelectedUser}
@@ -75,25 +75,32 @@ export default function UsersTab() {
         />
       </Box>
 
-      <Grid container spacing={{ xs: 2, md: 4 }}>
-        <Grid size={{ xs: 12, lg: 6 }}>
-          <UserForm
-            mode="create"
-            onSave={handleSave}
-            disabled={!!selectedUser}
-            onSuccess={loadUsers}
-          />
+      <Box
+        sx={{
+          maxWidth: { md: "900px", lg: "1100px", xl: "1400px" }, // begræns bredde på desktop
+          px: { xs: 2, md: 0 }, // lille padding på mobil
+        }}
+      >
+        <Grid container spacing={{ xs: 2, md: 4 }}>
+          <Grid size={{ xs: 12, lg: 6 }}>
+            <UserForm
+              mode="create"
+              onSave={handleSave}
+              disabled={!!selectedUser}
+              onSuccess={loadUsers}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, lg: 6 }}>
+            <UserForm
+              mode="update"
+              user={selectedUser}
+              onSave={handleSave}
+              onCancel={() => setSelectedUser(null)}
+              onSuccess={loadUsers}
+            />
+          </Grid>
         </Grid>
-        <Grid size={{ xs: 12, lg: 6 }}>
-          <UserForm
-            mode="update"
-            user={selectedUser}
-            onSave={handleSave}
-            onCancel={() => setSelectedUser(null)}
-            onSuccess={loadUsers}
-          />
-        </Grid>
-      </Grid>
+      </Box>
     </>
   );
 }

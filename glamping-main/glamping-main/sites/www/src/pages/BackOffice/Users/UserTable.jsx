@@ -40,6 +40,7 @@ export default function UserTable({ users, onSelect, onDelete }) {
       sx={{
         boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
         overflowX: "auto",
+        maxWidth: { xs: "90%", md: "95%" },
       }}
     >
       <Table sx={{ minWidth: { xs: 300, sm: 650 } }}>
@@ -110,9 +111,10 @@ export default function UserTable({ users, onSelect, onDelete }) {
                     variant="outlined"
                     size="small"
                     sx={{
-                      mr: { xs: 0.5, sm: 1 },
+                      mr: { xs: 0, sm: 1 },
                       fontSize: { xs: "0.75rem", md: "0.875rem" },
                       px: { xs: 1, sm: 2 },
+                      mb: { xs: 1, sm: 0 },
                     }}
                   >
                     Edit

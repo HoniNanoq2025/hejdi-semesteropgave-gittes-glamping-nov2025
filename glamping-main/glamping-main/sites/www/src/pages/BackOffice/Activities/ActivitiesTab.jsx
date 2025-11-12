@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Grid, Typography, Alert, Box } from "@mui/material";
+import { Typography, Alert, Box } from "@mui/material";
+import Grid from "@mui/material/Grid";
 import ActivityTable from "./ActivityTable";
 import ActivityForm from "./ActivityForm";
 import { fetchActivities } from "../../../api/fetch";
@@ -69,7 +70,7 @@ export default function ActivitiesTab() {
         </Alert>
       )}
 
-      <Box sx={{ mb: { xs: 3, md: 4 }, maxWidth: { md: "900px" } }}>
+      <Box maxWidth="900px" sx={{ mb: { xs: 3, md: 4 } }}>
         <ActivityTable
           activities={activities}
           onSelect={setSelectedActivity}
@@ -77,25 +78,32 @@ export default function ActivitiesTab() {
         />
       </Box>
 
-      <Grid container spacing={{ xs: 2, md: 4 }}>
-        <Grid size={{ xs: 12, lg: 6 }}>
-          <ActivityForm
-            mode="create"
-            onSave={handleSave}
-            disabled={!!selectedActivity}
-            onSuccess={loadActivities}
-          />
+      <Box
+        sx={{
+          maxWidth: { md: "900px", lg: "1100px", xl:"1400px" }, // begræns bredde på desktop
+          px: { xs: 2, md: 0 }, // lille padding på mobil
+        }}
+      >
+        <Grid container spacing={{ xs: 2, md: 4 }}>
+          <Grid size={{ xs: 12, lg: 6 }}>
+            <ActivityForm
+              mode="create"
+              onSave={handleSave}
+              disabled={!!selectedActivity}
+              onSuccess={loadActivities}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, lg: 6 }}>
+            <ActivityForm
+              mode="update"
+              activity={selectedActivity}
+              onSave={handleSave}
+              onCancel={() => setSelectedActivity(null)}
+              onSuccess={loadActivities}
+            />
+          </Grid>
         </Grid>
-        <Grid size={{ xs: 12, lg: 6 }}>
-          <ActivityForm
-            mode="update"
-            activity={selectedActivity}
-            onSave={handleSave}
-            onCancel={() => setSelectedActivity(null)}
-            onSuccess={loadActivities}
-          />
-        </Grid>
-      </Grid>
+      </Box>
     </>
   );
 }

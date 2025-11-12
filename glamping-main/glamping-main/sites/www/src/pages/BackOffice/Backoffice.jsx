@@ -32,6 +32,9 @@ export default function Backoffice() {
           backgroundColor: "white",
           borderRadius: "8px",
           boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+          maxWidth: "95%", // begræns bredde på desktop
+          mx: "auto", // centrerer Tabs
+          px: { xs: 1, md: 0 }, // lille padding på mobil, fjern på desktop
         }}
       >
         <Tab

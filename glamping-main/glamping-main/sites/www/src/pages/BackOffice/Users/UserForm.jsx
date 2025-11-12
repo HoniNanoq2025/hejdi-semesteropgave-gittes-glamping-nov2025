@@ -111,7 +111,13 @@ export default function UserForm({
         boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
         borderRadius: "8px",
         width: "100%",
-        maxWidth: { xs: "100%", md: "550px", lg: "650px", xl: "1100px" },
+        maxWidth: {
+          xs: "300px",
+          sm: "730px",
+          md: "800px",
+          lg: "470px",
+          xl: "620px",
+        },
       }}
     >
       <Typography
