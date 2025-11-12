@@ -4,13 +4,14 @@ import { createStay, updateStay } from "../../../api/fetch";
 import { toast } from "react-toastify";
 
 export default function StayForm({
-  mode,
-  stay,
-  onSave,
-  disabled,
-  onCancel,
-  onSuccess,
+  mode, // "create" eller "update"
+  stay, // Stay til opdatering
+  onSave, // Callback når ophold er gemt
+  disabled, // Om formularen skal være låst
+  onCancel, // Callback ved aflysning
+  onSuccess, // Callback ved succes
 }) {
+  // State til formularfelter
   const [title, setTitle] = useState("");
   const [header, setHeader] = useState("");
   const [description, setDescription] = useState("");
@@ -18,10 +19,14 @@ export default function StayForm({
   const [price, setPrice] = useState("");
   const [includes, setIncludes] = useState("");
   const [image, setImage] = useState(null);
+
+  // Loader-status
   const [loading, setLoading] = useState(false);
 
+  // useEffect kører når mode eller ophold ændres
   useEffect(() => {
     if (mode === "update" && stay) {
+      // Hvis vi opdaterer, fyld formularen med eksisterende data
       setTitle(stay.title || "");
       setHeader(stay.header || "");
       setDescription(stay.description || "");
@@ -29,10 +34,11 @@ export default function StayForm({
       setPrice(stay.price || "");
       setIncludes(Array.isArray(stay.includes) ? stay.includes.join(", ") : "");
     } else if (mode === "create") {
-      clearForm();
+      clearForm(); // Ryd formularen hvis vi opretter nyt ophold
     }
   }, [mode, stay]);
 
+  // Funktion til at rydde formularfelter
   const clearForm = () => {
     setTitle("");
     setHeader("");
@@ -43,14 +49,17 @@ export default function StayForm({
     setImage(null);
   };
 
+  // Funktion til at håndtere form submit
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+    e.preventDefault(); // Stopper side refresh (standard form-opførsel)
+    setLoading(true); // Sætter loading state
 
     try {
+      // Hent token fra localStorage
       const token = localStorage.getItem("token");
       const formData = new FormData();
 
+      // Tilføj felter til FormData
       formData.append("title", title);
       formData.append("header", header);
       formData.append("description", description);
@@ -59,40 +68,44 @@ export default function StayForm({
       formData.append("includes", includes);
 
       if (image) {
-        formData.append("file", image);
+        formData.append("file", image); // Tilføj billedfil hvis valgt
       }
 
       let result;
       if (mode === "create") {
-        result = await createStay(formData, token);
+        result = await createStay(formData, token); // Opret nyt review
       } else {
-        formData.append("id", stay._id);
+        formData.append("id", stay._id); // Tilføj id til opdatering
         result = await updateStay(formData, token);
       }
 
+      // Håndter respons fra API
       if (result.status === "ok") {
         toast.success(
           result.message ||
-            `Stay ${mode === "create" ? "created" : "updated"} successfully`
+            `Ophold ${
+              mode === "create" ? "skabelse" : "opdatering"
+            } var succesfuld`
         );
         onSave(result.data);
         if (mode === "create") {
-          clearForm();
+          clearForm(); // Ryd formular hvis nyt ophold
         }
         if (onSuccess) {
-          onSuccess();
+          onSuccess(); // Kald succes-callback
         }
       } else {
-        toast.error(result.message || "Operation failed");
+        toast.error(result.message || "Handlingen fejlede"); // Fejl notifikation
       }
     } catch (error) {
-      console.error("Error saving stay:", error);
-      toast.error("Failed to save stay");
+      console.error("Error saving stay:", error); // Log fejl
+      toast.error("Gem ophold-handling fejlede"); // Vis fejl
     } finally {
       setLoading(false);
     }
   };
 
+  // Disable knapper hvis loading eller disabled i create-mode
   const isDisabled = (mode === "create" && disabled) || loading;
 
   return (
@@ -114,6 +127,7 @@ export default function StayForm({
         }, // tvinger max bredde, matcher ActivityForm
       }}
     >
+      {/* Header baseret på form mode */}
       <Typography
         variant="h6"
         sx={{
@@ -122,11 +136,12 @@ export default function StayForm({
           fontSize: { xs: "1.125rem", md: "1.25rem" },
         }}
       >
-        {mode === "create" ? "Add New Stay" : "Update Stay"}
+        {mode === "create" ? "Tilføj Nyt Ophold" : "Opdatér Ophold"}
       </Typography>
 
+      {/* Formularfelter */}
       <TextField
-        label="Title"
+        label="Titel"
         fullWidth
         margin="normal"
         value={title}
@@ -135,7 +150,7 @@ export default function StayForm({
         required
       />
       <TextField
-        label="Header"
+        label="Overskrift"
         fullWidth
         margin="normal"
         value={header}
@@ -143,7 +158,7 @@ export default function StayForm({
         disabled={isDisabled}
       />
       <TextField
-        label="Description"
+        label="Beskrivelse"
         fullWidth
         margin="normal"
         multiline
@@ -153,7 +168,7 @@ export default function StayForm({
         disabled={isDisabled}
       />
       <TextField
-        label="Number of Persons"
+        label="Antal personer"
         fullWidth
         margin="normal"
         value={numberOfPersons}
@@ -162,7 +177,7 @@ export default function StayForm({
         required
       />
       <TextField
-        label="Price"
+        label="Pris"
         fullWidth
         margin="normal"
         type="number"
@@ -172,7 +187,7 @@ export default function StayForm({
         required
       />
       <TextField
-        label="Includes (comma separated)"
+        label="Inkluderer (komma separeret)"
         fullWidth
         margin="normal"
         multiline
@@ -182,6 +197,8 @@ export default function StayForm({
         disabled={isDisabled}
         helperText="Enter items separated by commas"
       />
+
+      {/* Upload billede */}
       <Button
         variant="outlined"
         component="label"
@@ -189,7 +206,7 @@ export default function StayForm({
         sx={{ mt: 2 }}
         disabled={isDisabled}
       >
-        Upload Image
+        Upload Billede
         <input
           type="file"
           hidden
@@ -199,10 +216,11 @@ export default function StayForm({
       </Button>
       {image && (
         <Typography variant="body2" sx={{ mt: 1, color: "#666" }}>
-          Selected: {image.name}
+          Valgt: {image.name}
         </Typography>
       )}
 
+      {/* Submit og cancel knapper */}
       <Box sx={{ display: "flex", gap: 1, mt: 3 }}>
         <Button
           type="submit"
@@ -210,7 +228,7 @@ export default function StayForm({
           fullWidth
           disabled={isDisabled}
         >
-          {loading ? "Saving..." : mode === "create" ? "Create" : "Update"}
+          {loading ? "Saving..." : mode === "create" ? "Skab" : "Opdatér"}
         </Button>
         {mode === "update" && onCancel && (
           <Button
@@ -219,7 +237,7 @@ export default function StayForm({
             onClick={onCancel}
             disabled={loading}
           >
-            Cancel
+            Annullér
           </Button>
         )}
       </Box>

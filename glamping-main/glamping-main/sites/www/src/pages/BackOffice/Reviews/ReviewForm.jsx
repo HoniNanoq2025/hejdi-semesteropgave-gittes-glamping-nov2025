@@ -4,31 +4,37 @@ import { createReview, updateReview } from "../../../api/fetch";
 import { toast } from "react-toastify";
 
 export default function ReviewForm({
-  mode,
-  review,
-  onSave,
-  disabled,
-  onCancel,
-  onSuccess,
+  mode, // "create" eller "update"
+  review, // Review til opdatering
+  onSave, // Callback når review er gemt
+  disabled, // Om formularen skal være låst
+  onCancel, // Callback ved aflysning
+  onSuccess, // Callback ved succes
 }) {
+  // State til formularfelter
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [reviewText, setReviewText] = useState("");
   const [stay, setStay] = useState("");
   const [image, setImage] = useState(null);
+
+  // Loader-status
   const [loading, setLoading] = useState(false);
 
+  // useEffect kører når mode eller review ændres
   useEffect(() => {
     if (mode === "update" && review) {
+      // Hvis vi opdaterer, fyld formularen med eksisterende data
       setName(review.name || "");
       setAge(review.age || "");
       setReviewText(review.review || "");
       setStay(review.stay || "");
     } else if (mode === "create") {
-      clearForm();
+      clearForm(); // Ryd formularen hvis vi opretter nyt review
     }
   }, [mode, review]);
 
+  // Funktion til at rydde formularfelter
   const clearForm = () => {
     setName("");
     setAge("");
@@ -37,53 +43,60 @@ export default function ReviewForm({
     setImage(null);
   };
 
+  // Funktion til at håndtere form submit
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+    e.preventDefault(); // Stopper side refresh (standard form-opførsel)
+    setLoading(true); // Sætter loading state
 
     try {
+      const token = localStorage.getItem("token"); // Hent token fra localStorage
       const formData = new FormData();
 
+      // Tilføj felter til FormData
       formData.append("name", name);
       formData.append("age", age);
       formData.append("review", reviewText);
       formData.append("stay", stay);
 
       if (image) {
-        formData.append("file", image);
+        formData.append("file", image); // Tilføj billedfil hvis valgt
       }
 
       let result;
       if (mode === "create") {
-        result = await createReview(formData);
+        result = await createReview(formData, token); // Opret nyt review
       } else {
-        formData.append("id", review._id);
-        result = await updateReview(formData);
+        formData.append("id", review._id); // Tilføj id til opdatering
+        result = await updateReview(formData, token); // Opdater eksisterende review
       }
 
+      // Håndter respons fra API
       if (result.status === "ok") {
         toast.success(
           result.message ||
-            `Review ${mode === "create" ? "created" : "updated"} successfully`
+            `Review ${
+              mode === "create" ? "skabelse" : "opdatering"
+            } var succesfuld`
         );
-        onSave(result.data);
+        onSave(result.data); // Kald callback med gemt data
         if (mode === "create") {
-          clearForm();
+          clearForm(); // Ryd formular hvis nyt review
         }
         if (onSuccess) {
-          onSuccess();
+          onSuccess(); // Kald succes-callback
         }
       } else {
-        toast.error(result.message || "Operation failed");
+        toast.error(result.message || "Handlingen fejlede"); // Fejl notifikation
       }
     } catch (error) {
-      console.error("Error saving review:", error);
-      toast.error("Failed to save review");
+      console.error("Error saving review:", error); // Log fejl
+      toast.error("Gem review-handling fejlede"); // Vis fejl notifikation
     } finally {
       setLoading(false);
     }
   };
 
+  // Disable knapper hvis loading eller disabled i create-mode
   const isDisabled = (mode === "create" && disabled) || loading;
 
   return (
@@ -102,9 +115,10 @@ export default function ReviewForm({
           md: "800px",
           lg: "470px",
           xl: "620px",
-        },
+        }, // tvinger max bredde, matcher ActivityForm
       }}
     >
+      {/* Header baseret på form mode */}
       <Typography
         variant="h6"
         sx={{
@@ -113,11 +127,12 @@ export default function ReviewForm({
           fontSize: { xs: "1.125rem", md: "1.25rem" },
         }}
       >
-        {mode === "create" ? "Add New Review" : "Update Review"}
+        {mode === "create" ? "Tilføj Nyt Review" : "Opdatér Review"}
       </Typography>
 
+      {/* Formularfelter */}
       <TextField
-        label="Name"
+        label="Navn"
         fullWidth
         margin="normal"
         value={name}
@@ -126,7 +141,7 @@ export default function ReviewForm({
         required
       />
       <TextField
-        label="Age"
+        label="Alder"
         fullWidth
         margin="normal"
         type="number"
@@ -136,7 +151,7 @@ export default function ReviewForm({
         required
       />
       <TextField
-        label="Stay"
+        label="Ophold"
         fullWidth
         margin="normal"
         value={stay}
@@ -154,6 +169,8 @@ export default function ReviewForm({
         disabled={isDisabled}
         required
       />
+
+      {/* Upload billede */}
       <Button
         variant="outlined"
         component="label"
@@ -161,7 +178,7 @@ export default function ReviewForm({
         sx={{ mt: 2 }}
         disabled={isDisabled}
       >
-        Upload Image
+        Upload Billede
         <input
           type="file"
           hidden
@@ -171,10 +188,11 @@ export default function ReviewForm({
       </Button>
       {image && (
         <Typography variant="body2" sx={{ mt: 1, color: "#666" }}>
-          Selected: {image.name}
+          Valgt: {image.name}
         </Typography>
       )}
 
+      {/* Submit og cancel knapper */}
       <Box sx={{ display: "flex", gap: 1, mt: 3 }}>
         <Button
           type="submit"
@@ -182,7 +200,7 @@ export default function ReviewForm({
           fullWidth
           disabled={isDisabled}
         >
-          {loading ? "Saving..." : mode === "create" ? "Create" : "Update"}
+          {loading ? "Gemmer..." : mode === "create" ? "Skab" : "Opdatér"}
         </Button>
         {mode === "update" && onCancel && (
           <Button
@@ -191,7 +209,7 @@ export default function ReviewForm({
             onClick={onCancel}
             disabled={loading}
           >
-            Cancel
+            Annullér
           </Button>
         )}
       </Box>

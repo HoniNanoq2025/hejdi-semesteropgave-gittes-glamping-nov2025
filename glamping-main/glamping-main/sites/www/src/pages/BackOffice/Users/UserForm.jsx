@@ -14,31 +14,37 @@ import {
 import { toast } from "react-toastify";
 
 export default function UserForm({
-  mode,
-  user,
-  onSave,
-  disabled,
-  onCancel,
-  onSuccess,
+  mode, // "create" eller "update"
+  user, // User til opdatering
+  onSave, // Callback når bruger er gemt
+  disabled, // Om formularen skal være låst
+  onCancel, // Callback ved aflysning
+  onSuccess, // Callback ved succes
 }) {
+  // State til formularfelter
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("guest");
   const [image, setImage] = useState(null);
+
+  // Loader-status
   const [loading, setLoading] = useState(false);
 
+  // useEffect kører når mode eller bruger ændres
   useEffect(() => {
     if (mode === "update" && user) {
+      // Hvis vi opdaterer, fyld formularen med eksisterende data
       setName(user.name || "");
       setEmail(user.email || "");
       setRole(user.role || "guest");
       setPassword(""); // Altid ryd password !!
     } else if (mode === "create") {
-      clearForm();
+      clearForm(); // Ryd formularen hvis vi opretter ny Bruger
     }
   }, [mode, user]);
 
+  // Funktion til at rydde formularfelter
   const clearForm = () => {
     setName("");
     setEmail("");
@@ -47,14 +53,17 @@ export default function UserForm({
     setImage(null);
   };
 
+  // Funktion til at håndtere form submit
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+    e.preventDefault(); // Stopper side refresh (standard form-opførsel)
+    setLoading(true); // Sætter loading state
 
     try {
+      // Hent token fra localStorage
       const token = localStorage.getItem("token");
       const formData = new FormData();
 
+      // Tilføj felter til FormData
       formData.append("name", name);
       formData.append("email", email);
       formData.append("role", role);
@@ -65,40 +74,44 @@ export default function UserForm({
       }
 
       if (image) {
-        formData.append("file", image);
+        formData.append("file", image); // Tilføj billedfil hvis valgt
       }
 
       let result;
 
       if (mode === "create") {
-        result = await createUser(formData, token); // fra fetch.js
+        result = await createUser(formData, token); // Opret ny Bruger
       } else {
-        result = await updateUser(formData, token, user._id); // fra fetch.js
+        result = await updateUser(formData, token, user._id); // Opdater eksisterende Bruger
       }
 
+      // Håndter respons fra API
       if (result.message && result.message.includes("successfully")) {
         toast.success(
           result.message ||
-            `User ${mode === "create" ? "created" : "updated"} successfully`
+            `Bruger ${
+              mode === "create" ? "skabelse" : "opdatering"
+            } var succesfuld`
         );
         onSave(result.data);
         if (mode === "create") {
-          clearForm();
+          clearForm(); // Ryd formular hvis ny bruger
         }
         if (onSuccess) {
-          onSuccess();
+          onSuccess(); // Kald succes-callback
         }
       } else {
-        toast.error(result.message || "Operation failed");
+        toast.error(result.message || "Handlingen fejlede"); // Fejl notifikation
       }
     } catch (error) {
-      console.error("Error saving user:", error);
-      toast.error("Failed to save user");
+      console.error("Error saving user:", error); // Log fejl
+      toast.error("Gem Bruger-handling fejlede"); // Vis fejl
     } finally {
       setLoading(false);
     }
   };
 
+  // Disable knapper hvis loading eller disabled i create-mode
   const isDisabled = (mode === "create" && disabled) || loading;
 
   return (
@@ -110,16 +123,17 @@ export default function UserForm({
         backgroundColor: "white",
         boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
         borderRadius: "8px",
-        width: "100%",
+        width: "100%", // fylder hele Grid item
         maxWidth: {
           xs: "300px",
           sm: "730px",
           md: "800px",
           lg: "470px",
           xl: "620px",
-        },
+        }, // tvinger max bredde, matcher ActivityForm
       }}
     >
+      {/* Header baseret på form mode */}
       <Typography
         variant="h6"
         sx={{
@@ -128,11 +142,12 @@ export default function UserForm({
           fontSize: { xs: "1.125rem", md: "1.25rem" },
         }}
       >
-        {mode === "create" ? "Add New User" : "Update User"}
+        {mode === "create" ? "Tilføj Ny Bruger" : "Opdatér Bruger"}
       </Typography>
 
+      {/* Formularfelter */}
       <TextField
-        label="Name"
+        label="Navn"
         fullWidth
         margin="normal"
         value={name}
@@ -151,7 +166,7 @@ export default function UserForm({
         required
       />
       <TextField
-        label={mode === "update" ? "New Password (optional)" : "Password"}
+        label={mode === "update" ? "Nyt Password (valgfrit)" : "Password"}
         type="password"
         fullWidth
         margin="normal"
@@ -172,6 +187,7 @@ export default function UserForm({
         </Select>
       </FormControl>
 
+      {/* Upload billede */}
       <Button
         variant="outlined"
         component="label"
@@ -179,7 +195,7 @@ export default function UserForm({
         sx={{ mt: 2 }}
         disabled={isDisabled}
       >
-        Upload Profile Picture
+        Upload Profilbillede
         <input
           type="file"
           hidden
@@ -189,10 +205,11 @@ export default function UserForm({
       </Button>
       {image && (
         <Typography variant="body2" sx={{ mt: 1, color: "#666" }}>
-          Selected: {image.name}
+          Valgt: {image.name}
         </Typography>
       )}
 
+      {/* Submit og cancel knapper */}
       <Box sx={{ display: "flex", gap: 1, mt: 3 }}>
         <Button
           type="submit"
@@ -200,7 +217,7 @@ export default function UserForm({
           fullWidth
           disabled={isDisabled}
         >
-          {loading ? "Saving..." : mode === "create" ? "Create" : "Update"}
+          {loading ? "Saving..." : mode === "create" ? "Skab" : "Opdatér"}
         </Button>
         {mode === "update" && onCancel && (
           <Button
@@ -209,7 +226,7 @@ export default function UserForm({
             onClick={onCancel}
             disabled={loading}
           >
-            Cancel
+            Annullér
           </Button>
         )}
       </Box>

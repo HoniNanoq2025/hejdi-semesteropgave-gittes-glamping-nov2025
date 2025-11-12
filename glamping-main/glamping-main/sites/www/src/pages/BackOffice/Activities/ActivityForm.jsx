@@ -45,7 +45,7 @@ export default function ActivityForm({
 
   // Funktion til at håndtere form submit
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Stopper standard form submit
+    e.preventDefault(); // Stopper side refresh (standard form-opførsel)
     setLoading(true); // Sætter loading state
 
     try {
@@ -74,7 +74,9 @@ export default function ActivityForm({
       if (result.status === "ok") {
         toast.success(
           result.message ||
-            `Activity ${mode === "create" ? "created" : "updated"} successfully`
+            `Activity ${
+              mode === "create" ? "skabelse" : "opdatering"
+            } var succesfuld`
         );
         onSave(result.data); // Kald callback med gemt data
         if (mode === "create") {
@@ -84,11 +86,11 @@ export default function ActivityForm({
           onSuccess(); // Kald succes-callback
         }
       } else {
-        toast.error(result.message || "Operation failed"); // Fejl notifikation
+        toast.error(result.message || "Handlingen fejlede"); // Fejl notifikation
       }
     } catch (err) {
       console.error("Error saving activity:", err); // Log fejl
-      toast.error("Failed to save activity"); // Vis fejl notifikation
+      toast.error("Gem aktivitet-handling fejlede"); // Vis fejl notifikation
     } finally {
       setLoading(false); // Stop loader
     }
@@ -113,7 +115,7 @@ export default function ActivityForm({
           md: "800px",
           lg: "470px",
           xl: "620px",
-        },
+        }, // tvinger max bredde, matcher de andre Forms
       }}
     >
       {/* Header baseret på form mode */}
@@ -125,12 +127,12 @@ export default function ActivityForm({
           fontSize: { xs: "1.125rem", md: "1.25rem" },
         }}
       >
-        {mode === "create" ? "Add New Activity" : "Update Activity"}
+        {mode === "create" ? "Tilføj Ny Aktivitet" : "Opdatér Aktivitet"}
       </Typography>
 
       {/* Formularfelter */}
       <TextField
-        label="Title"
+        label="Titel"
         fullWidth
         margin="normal"
         value={title}
@@ -139,7 +141,7 @@ export default function ActivityForm({
         required
       />
       <TextField
-        label="Description"
+        label="Beskrivelse"
         fullWidth
         margin="normal"
         multiline
@@ -149,7 +151,7 @@ export default function ActivityForm({
         disabled={isDisabled}
       />
       <TextField
-        label="Date"
+        label="Dato"
         fullWidth
         margin="normal"
         value={date}
@@ -158,7 +160,7 @@ export default function ActivityForm({
         required
       />
       <TextField
-        label="Time"
+        label="Tid"
         fullWidth
         margin="normal"
         value={time}
@@ -174,7 +176,7 @@ export default function ActivityForm({
         sx={{ mt: 2 }}
         disabled={isDisabled}
       >
-        Upload Image
+        Upload Billede
         <input
           type="file"
           hidden
@@ -184,7 +186,7 @@ export default function ActivityForm({
       </Button>
       {image && (
         <Typography variant="body2" sx={{ mt: 1, color: "#666" }}>
-          Selected: {image.name}
+          Valgt: {image.name}
         </Typography>
       )}
 
@@ -196,7 +198,7 @@ export default function ActivityForm({
           fullWidth
           disabled={isDisabled}
         >
-          {loading ? "Saving..." : mode === "create" ? "Create" : "Update"}
+          {loading ? "Gemmer..." : mode === "create" ? "Skab" : "Opdatér"}
         </Button>
         {mode === "update" && onCancel && (
           <Button
@@ -205,7 +207,7 @@ export default function ActivityForm({
             onClick={onCancel}
             disabled={loading}
           >
-            Cancel
+            Annullér
           </Button>
         )}
       </Box>
