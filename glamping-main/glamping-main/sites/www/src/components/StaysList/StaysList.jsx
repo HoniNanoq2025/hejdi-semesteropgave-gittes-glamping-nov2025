@@ -2,18 +2,19 @@ import { Box, Grid } from "@mui/material";
 import { motion } from "framer-motion";
 import StaysCard from "../StaysCard/StaysCard";
 
-// Animation variants
+// Animation variants - containerVariants styrer hele listen
 const containerVariants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15, // Forsinkelse mellem hvert kort
-      delayChildren: 0.1, // Forsinkelse før første kort
+      staggerChildren: 0.15, // Forsinkelse på 150ms mellem hvert kort
+      delayChildren: 0.1, // Forsinkelse før første kort - starter efter 100ms
     },
   },
 };
 
+// Styrer hvert enkelt kort
 const itemVariants = {
   hidden: {
     opacity: 0,
@@ -41,10 +42,10 @@ export default function StaysList({ stays }) {
       sx={{ py: 10 }}
     >
       <Grid
-        component={motion.div}
+        component={motion.div} // Gør Grid til en motion component
         variants={containerVariants}
-        initial="hidden"
-        animate="show"
+        initial="hidden" // Startstate
+        animate="show" // Slutstate
         container
         direction={{ xs: "column", md: "row" }}
         justifyContent="center"
