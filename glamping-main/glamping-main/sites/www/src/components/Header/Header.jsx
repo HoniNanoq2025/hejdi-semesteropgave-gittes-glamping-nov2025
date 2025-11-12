@@ -32,11 +32,11 @@ const BurgerButton = styled(IconButton)({
     backgroundColor: "#2a4f57",
   },
   "&:focus": {
-    outline: "none", // Fjern browserens outline
+    outline: "none", // Fjerner browserens standard outline ved klik
   },
   "&.Mui-focusVisible": {
-    outline: "2px solid #ffffff50", // Kun synlig ved keyboard-navigation (a11y)
-    outlineOffset: "4px",
+    outline: "2px solid #ffffff50", // Viser en svag hvid kant, når knappen får fokus via tastatur
+    outlineOffset: "4px", // Laver lidt afstand mellem outline og knappen
   },
 });
 
@@ -48,8 +48,8 @@ const StyledNavLink = styled(NavLink)({
   fontFamily: '"Zen Loop", sans-serif',
   transition: "color 0.2s ease",
   "&:hover, &.active": {
-    color: "#010405ff",
-    fontSize: "2.5rem",
+    color: "#010405ff", // Skifter farve, når linket hoveres eller er aktivt
+    fontSize: "2.5rem", // Gør teksten større på hover/aktiv
   },
 });
 
@@ -127,6 +127,7 @@ export default function Header() {
           open={menuOpen}
           onClose={() => setMenuOpen(false)}
           sx={{
+            // Den indre "paper"-del af MUI Drawer (selve det visuelle panel)
             "& .MuiDrawer-paper": {
               backgroundColor: "#829b97",
               width: "100%",
@@ -147,11 +148,11 @@ export default function Header() {
               right: "1.5rem",
               color: "white",
               "&:focus": {
-                outline: "none", // Fjern browserens outline
+                outline: "none", // Fjern browserens standard outline ved klik
               },
               "&.Mui-focusVisible": {
-                outline: "2px solid #ffffff50", // Kun synlig ved keyboard-navigation (a11y)
-                outlineOffset: "4px",
+                outline: "2px solid #ffffff50", // Viser kun outline, når brugeren navigerer med tastatur
+                outlineOffset: "4px", // Giver luft mellem kant og ikon
               },
             }}
           >
